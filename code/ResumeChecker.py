@@ -165,7 +165,7 @@ def term_match(string_to_search, term="me"):
 
 
 def build_dataframe(path):
-
+    logging.info('Searching path: ' + str(path))
     path_glob = os.path.join(path, '*.pdf')
     file_list =[pdf_file for pdf_file in glob.glob(path_glob)]
 
