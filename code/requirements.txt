@@ -1,2 +1,0 @@
-pdfminer
-html2text

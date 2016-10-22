@@ -13,7 +13,6 @@
 #
 # imports
 # *********************************
-import csv
 import functools
 import glob
 import logging
@@ -212,7 +211,7 @@ def main():
     parser.add_argument('--data_path', help='Path to folder containing PDF resumes.',
                         required=True)
     parser.add_argument('--output_path', help='Path to place output .csv file',
-                        default='resumes_output.csv')
+                        default='../data/output/resumes_output.csv')
 
     args = parser.parse_args()
 
