@@ -68,9 +68,18 @@ def main():
     logging.info('End Main')
 
 
-def convert_pdf_to_txt(path):
+def convert_pdf_to_txt(input_pdf_path):
+    """
+    A utility function to convert a machine-readable PDF to raw text.
+
+    This code is largely borrowed from existing solutions, and does not match the style of the rest of this repo.
+    :param input_pdf_path: Path to the .pdf file which should be converted
+    :type input_pdf_path: str
+    :return: The text contents of the pdf
+    :rtype: str
+    """
     try:
-        logging.debug('Converting pdf to txt: ' + str(path))
+        logging.debug('Converting pdf to txt: ' + str(input_pdf_path))
         # Setup pdf reader
         rsrcmgr = PDFResourceManager()
         retstr = StringIO()
@@ -84,7 +93,7 @@ def convert_pdf_to_txt(path):
         pagenos = set()
 
         # Iterate through pages
-        path_open = file(path, 'rb')
+        path_open = file(input_pdf_path, 'rb')
         for page in PDFPage.get_pages(path_open, pagenos, maxpages=maxpages, password=password,
                                       caching=caching, check_extractable=True):
             interpreter.process_page(page)
@@ -104,18 +113,25 @@ def convert_pdf_to_txt(path):
         return full_string.decode('ascii', errors='ignore')
 
     except Exception, e:
-        logging.error('Error in file: ' + path + str(e))
+        logging.error('Error in file: ' + input_pdf_path + str(e))
         return ''
 
 
-def check_phonenumber(string_to_search):
+def check_phone_number(string_to_search):
+    """
+    Find first phone number in the string_to_search
+    :param string_to_search: A string to check for a phone number in
+    :type string_to_search: str
+    :return: A string containing the first phone number, or None if no phone number is found.
+    :rtype: str
+    """
     try:
         regular_expression = re.compile(r"\(?"  # open parenthesis
                                         r"(\d{3})?"  # area code
                                         r"\)?"  # close parenthesis
                                         r"[\s\.-]{0,2}?"  # area code, phone separator
-                                        r"(\d{3})"  # 3 digit local
-                                        r"[\s\.-]{0,2}"  # 3 digit local, 4 digit local separator
+                                        r"(\d{3})"  # 3 digit exchange
+                                        r"[\s\.-]{0,2}"  # separator bbetween 3 digit exchange, 4 digit local
                                         r"(\d{4})",  # 4 digit local
                                         re.IGNORECASE)
         result = re.search(regular_expression, string_to_search)
@@ -129,6 +145,13 @@ def check_phonenumber(string_to_search):
 
 
 def check_email(string_to_search):
+    """
+       Find first email address in the string_to_search
+       :param string_to_search: A string to check for an email address in
+       :type string_to_search: str
+       :return: A string containing the first email address, or None if no email address is found.
+       :rtype: str
+       """
     try:
         regular_expression = re.compile(r"[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}", re.IGNORECASE)
         result = re.search(regular_expression, string_to_search)
@@ -141,6 +164,13 @@ def check_email(string_to_search):
 
 
 def check_address(string_to_search):
+    """
+       Find first physical address in the string_to_search
+       :param string_to_search: A string to check for a physical address in
+       :type string_to_search: str
+       :return: A string containing the first address, or None if no physical address is found.
+       :rtype: str
+       """
     try:
         regular_expression = re.compile(r"[0-9]+ [a-z0-9,\.# ]+\bCA\b", re.IGNORECASE)
         result = re.search(regular_expression, string_to_search)
@@ -154,7 +184,16 @@ def check_address(string_to_search):
         return None
 
 
-def term_count(string_to_search, term="me"):
+def term_count(string_to_search, term):
+    """
+    A utility function which counts the number of times `term` occurs in `string_to_search`
+    :param string_to_search: A string which may or may not contain the term.
+    :type string_to_search: str
+    :param term: The term to search for the number of occurrences for
+    :type term: str
+    :return: The number of times the `term` occurs in the `string_to_search`
+    :rtype: int
+    """
     try:
         regular_expression = re.compile(term, re.IGNORECASE)
         result = re.findall(regular_expression, string_to_search)
@@ -165,13 +204,22 @@ def term_count(string_to_search, term="me"):
         return 0
 
 
-def term_match(string_to_search, term="me"):
+def term_match(string_to_search, regex_pattern):
+    """
+    A utility function which return the first match to the `regex_pattern` in the `string_to_search`
+    :param string_to_search: A string which may or may not contain the term.
+    :type string_to_search: str
+    :param regex_pattern: The term to search for the number of occurrences for
+    :type regex_pattern: str
+    :return: The first match of the `regex_pattern` in the `string_to_search`
+    :rtype: str
+    """
     try:
-        regular_expression = re.compile(term, re.IGNORECASE)
+        regular_expression = re.compile(regex_pattern, re.IGNORECASE)
         result = re.findall(regular_expression, string_to_search)
         return result[0]
     except Exception, e:
-        logging.error('Issue parsing term: ' + str(term) + ' from string: ' +
+        logging.error('Issue parsing term: ' + str(regex_pattern) + ' from string: ' +
                       str(string_to_search) + ': ' + str(e))
         return None
 
@@ -212,7 +260,7 @@ def create_resume_df(data_path):
     df["num_words"] = df["raw_text"].apply(lambda x: len(x.split()))
 
     # Scrape contact information
-    df["phone_number"] = df["raw_text"].apply(check_phonenumber)
+    df["phone_number"] = df["raw_text"].apply(check_phone_number)
     df["area_code"] = df["phone_number"].apply(functools.partial(term_match, term=r"\d{3}"))
     df["email"] = df["raw_text"].apply(check_email)
     df["email_domain"] = df["email"].apply(functools.partial(term_match, term=r"@(.+)"))
