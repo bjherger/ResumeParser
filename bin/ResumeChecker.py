@@ -59,7 +59,7 @@ def main():
 
     args = parser.parse_args()
 
-    logging.info('Command line arguments: {}'.format(vars(args)))
+    logging.info('Command line arguments: %s', vars(args))
 
     # Create resume resume_df
     resume_df = create_resume_df(args.data_path)
@@ -113,8 +113,8 @@ def convert_pdf_to_txt(input_pdf_path):
         full_string = re.sub(r"\(cid:\d{0,2}\)", " ", full_string)
         return full_string.decode('ascii', errors='ignore')
 
-    except Exception, e:
-        logging.error('Error in file: ' + input_pdf_path + str(e))
+    except Exception, exception_instance:
+        logging.error('Error in file: ' + input_pdf_path + str(exception_instance))
         return ''
 
 
@@ -140,8 +140,8 @@ def check_phone_number(string_to_search):
             result = result.groups()
             result = "-".join(result)
         return result
-    except Exception, e:
-        logging.error('Issue parsing phone number: ' + string_to_search + str(e))
+    except Exception, exception_instance:
+        logging.error('Issue parsing phone number: ' + string_to_search + str(exception_instance))
         return None
 
 
@@ -159,8 +159,8 @@ def check_email(string_to_search):
         if result:
             result = result.group()
         return result
-    except Exception, e:
-        logging.error('Issue parsing email number: ' + string_to_search + str(e))
+    except Exception, exception_instance:
+        logging.error('Issue parsing email number: ' + string_to_search + str(exception_instance))
         return None
 
 
@@ -179,8 +179,8 @@ def check_address(string_to_search):
             result = result.group()
 
         return result
-    except Exception, e:
-        logging.error('Issue parsing email number: ' + string_to_search + str(e))
+    except Exception, exception_instance:
+        logging.error('Issue parsing email number: ' + string_to_search + str(exception_instance))
 
         return None
 
@@ -199,29 +199,29 @@ def term_count(string_to_search, term):
         regular_expression = re.compile(term, re.IGNORECASE)
         result = re.findall(regular_expression, string_to_search)
         return len(result)
-    except Exception, e:
+    except Exception, exception_instance:
         logging.error('Issue parsing term: ' + str(term) + ' from string: ' + str(
-            string_to_search) + ': ' + str(e))
+            string_to_search) + ': ' + str(exception_instance))
         return 0
 
 
-def term_match(string_to_search, regex_pattern):
+def term_match(string_to_search, term):
     """
     A utility function which return the first match to the `regex_pattern` in the `string_to_search`
     :param string_to_search: A string which may or may not contain the term.
     :type string_to_search: str
-    :param regex_pattern: The term to search for the number of occurrences for
-    :type regex_pattern: str
+    :param term: The term to search for the number of occurrences for
+    :type term: str
     :return: The first match of the `regex_pattern` in the `string_to_search`
     :rtype: str
     """
     try:
-        regular_expression = re.compile(regex_pattern, re.IGNORECASE)
+        regular_expression = re.compile(term, re.IGNORECASE)
         result = re.findall(regular_expression, string_to_search)
         return result[0]
-    except Exception, e:
-        logging.error('Issue parsing term: ' + str(regex_pattern) + ' from string: ' +
-                      str(string_to_search) + ': ' + str(e))
+    except Exception, exception_instance:
+        logging.error('Issue parsing term: ' + str(term) + ' from string: ' +
+                      str(string_to_search) + ': ' + str(exception_instance))
         return None
 
 
@@ -253,38 +253,38 @@ def create_resume_df(data_path):
     file_list = glob.glob(path_glob)
 
     logging.info('Iterating through file_list: ' + str(file_list))
-    df = pd.DataFrame()
+    resume_summary_df = pd.DataFrame()
 
     # Store metadata, raw text, and word count
-    df["file_path"] = file_list
-    df["raw_text"] = df["file_path"].apply(convert_pdf_to_txt)
-    df["num_words"] = df["raw_text"].apply(lambda x: len(x.split()))
+    resume_summary_df["file_path"] = file_list
+    resume_summary_df["raw_text"] = resume_summary_df["file_path"].apply(convert_pdf_to_txt)
+    resume_summary_df["num_words"] = resume_summary_df["raw_text"].apply(lambda x: len(x.split()))
 
     # Scrape contact information
-    df["phone_number"] = df["raw_text"].apply(check_phone_number)
-    df["area_code"] = df["phone_number"].apply(functools.partial(term_match, term=r"\d{3}"))
-    df["email"] = df["raw_text"].apply(check_email)
-    df["email_domain"] = df["email"].apply(functools.partial(term_match, term=r"@(.+)"))
-    df["address"] = df["raw_text"].apply(check_address)
-    df["linkedin"] = df["raw_text"].apply(functools.partial(term_count, term=r"linkedin"))
-    df["github"] = df["raw_text"].apply(functools.partial(term_count, term=r"github"))
+    resume_summary_df["phone_number"] = resume_summary_df["raw_text"].apply(check_phone_number)
+    resume_summary_df["area_code"] = resume_summary_df["phone_number"].apply(functools.partial(term_match, term=r"\d{3}"))
+    resume_summary_df["email"] = resume_summary_df["raw_text"].apply(check_email)
+    resume_summary_df["email_domain"] = resume_summary_df["email"].apply(functools.partial(term_match, term=r"@(.+)"))
+    resume_summary_df["address"] = resume_summary_df["raw_text"].apply(check_address)
+    resume_summary_df["linkedin"] = resume_summary_df["raw_text"].apply(functools.partial(term_count, term=r"linkedin"))
+    resume_summary_df["github"] = resume_summary_df["raw_text"].apply(functools.partial(term_count, term=r"github"))
 
     # Scrape education information
-    df["phd"] = df["raw_text"].apply(functools.partial(term_count, term=r"ph.?d.?"))
+    resume_summary_df["phd"] = resume_summary_df["raw_text"].apply(functools.partial(term_count, term=r"ph.?d.?"))
 
     # Scrape skill information
-    df["java_count"] = df["raw_text"].apply(functools.partial(term_count, term=r"java"))
-    df["python_count"] = df["raw_text"].apply(functools.partial(term_count, term=r"python"))
-    df["R_count"] = df["raw_text"].apply(functools.partial(term_count, term=r" R[ ,]"))
-    df["latex_count"] = df["raw_text"].apply(functools.partial(term_count, term=r"latex"))
-    df["stata_count"] = df["raw_text"].apply(functools.partial(term_count, term=r"stata"))
-    df["CS_count"] = df["raw_text"].apply(functools.partial(term_count, term=r"computer science"))
-    df["mysql_count"] = df["raw_text"].apply(functools.partial(term_count, term=r"mysql"))
-    df["ms_office"] = df["raw_text"].apply(functools.partial(term_count, term=r"microsoft office"))
-    df["analytics"] = df["raw_text"].apply(functools.partial(term_count, term=r"analytics"))
+    resume_summary_df["java_count"] = resume_summary_df["raw_text"].apply(functools.partial(term_count, term=r"java"))
+    resume_summary_df["python_count"] = resume_summary_df["raw_text"].apply(functools.partial(term_count, term=r"python"))
+    resume_summary_df["R_count"] = resume_summary_df["raw_text"].apply(functools.partial(term_count, term=r" R[ ,]"))
+    resume_summary_df["latex_count"] = resume_summary_df["raw_text"].apply(functools.partial(term_count, term=r"latex"))
+    resume_summary_df["stata_count"] = resume_summary_df["raw_text"].apply(functools.partial(term_count, term=r"stata"))
+    resume_summary_df["CS_count"] = resume_summary_df["raw_text"].apply(functools.partial(term_count, term=r"computer science"))
+    resume_summary_df["mysql_count"] = resume_summary_df["raw_text"].apply(functools.partial(term_count, term=r"mysql"))
+    resume_summary_df["ms_office"] = resume_summary_df["raw_text"].apply(functools.partial(term_count, term=r"microsoft office"))
+    resume_summary_df["analytics"] = resume_summary_df["raw_text"].apply(functools.partial(term_count, term=r"analytics"))
 
     # Return enriched DF
-    return df
+    return resume_summary_df
 
 
 if __name__ == '__main__':
