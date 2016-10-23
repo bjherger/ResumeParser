@@ -1,0 +1,11 @@
+name: python_environment
+dependencies:
+- openssl=1.0.2h=2
+- pip=8.1.2=py27_0
+- python=2.7.12=1
+- readline=6.2=2
+- setuptools=26.1.1=py27_0
+- sqlite=3.13.0=0
+- tk=8.5.18=0
+- wheel=0.29.0=py27_0
+- zlib=1.2.8=3
