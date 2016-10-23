@@ -1,24 +1,17 @@
-# ResumeChecker.py
-# A component of: resumes
-# (C) Brendan J. Herger
-# Analytics Master's Candidate at University of San Francisco
-# 13herger@gmail.com
-#
-# Created on 10/10/14, at 10:29 AM
-#
-# Available under MIT License
-# http://opensource.org/licenses/MIT
-#
-# *********************************
-#
-# imports
-# *********************************
+#!/usr/bin/env python
+"""
+coding=utf-8
+
+A utility to make handling many resumes easier by automatically pulling contact information, required skills and
+custom text fields. These results are then surfaced as a convenient summary CSV.
+
+"""
+import argparse
 import functools
 import glob
 import logging
 import os
 import re
-import argparse
 
 import pandas as pd
 
@@ -28,20 +21,50 @@ from pdfminer.pdfinterp import PDFResourceManager, PDFPageInterpreter
 from pdfminer.pdfpage import PDFPage
 from cStringIO import StringIO
 
-
-# global variables
-# *********************************
-
+logging.basicConfig(level=logging.DEBUG)
 
 __author__ = 'bjherger'
 __license__ = 'http://opensource.org/licenses/MIT'
-__version__ = '1.0'
+__version__ = '2.0'
 __email__ = '13herger@gmail.com'
 __status__ = 'Development'
 __maintainer__ = 'bjherger'
 
-# functions
-# *********************************
+
+def main():
+    """
+    Main method for ResumeParser. This utility will read the data_path and output path.
+
+    With this information, this utility will then:
+     - Create a list of documents to scan
+     - Read the text from those documents
+     - Pull out desired information (e.g. contact info, skills, custom text fields)
+     - Output summary CSV
+    :return: None
+    :rtype: None
+    """
+    logging.info('Begin Main')
+
+    # Parse command line arguments
+    logging.info('Parsing input arguments')
+    parser = argparse.ArgumentParser(
+        description='Script to parse PDF resumes, and create a csv file containing contact info '
+                    'and required fields')
+    parser.add_argument('--data_path', help='Path to folder containing documents ending in .pdf',
+                        required=True)
+    parser.add_argument('--output_path', help='Path to place output .csv file',
+                        default='../data/output/resumes_output.csv')
+
+    args = parser.parse_args()
+
+    logging.info('Command line arguments: {}'.format(vars(args)))
+
+    # Create resume resume_df
+    resume_df = create_resume_df(args.data_path)
+
+    # Output to CSV
+    resume_df.to_csv(args.output_path)
+    logging.info('End Main')
 
 
 def list_files(path=os.getcwd()):
@@ -147,7 +170,7 @@ def term_count(string_to_search, term="me"):
         result = re.findall(regular_expression, string_to_search)
         return len(result)
     except Exception, e:
-        logging.error('Issue parsing term: ' + str(term)+' from string: ' + str(
+        logging.error('Issue parsing term: ' + str(term) + ' from string: ' + str(
             string_to_search) + ': ' + str(e))
         return 0
 
@@ -159,14 +182,14 @@ def term_match(string_to_search, term="me"):
         return result[0]
     except Exception, e:
         logging.error('Issue parsing term: ' + str(term) + ' from string: ' +
-                      str(string_to_search) +': ' + str(e))
+                      str(string_to_search) + ': ' + str(e))
         return None
 
 
-def build_dataframe(path):
+def create_resume_df(path):
     logging.info('Searching path: ' + str(path))
     path_glob = os.path.join(path, '*.pdf')
-    file_list =[pdf_file for pdf_file in glob.glob(path_glob)]
+    file_list = [pdf_file for pdf_file in glob.glob(path_glob)]
 
     logging.info('Iterating through file_list: ' + str(file_list))
     df = pd.DataFrame()
@@ -199,39 +222,11 @@ def build_dataframe(path):
     df["ms_office"] = df["html"].apply(functools.partial(term_count, term=r"microsoft office"))
     df["analytics"] = df["html"].apply(functools.partial(term_count, term=r"analytics"))
 
-
-
     return df
-
-
-def main():
-    parser = argparse.ArgumentParser(
-        description='Script to parse PDF resumes, and create a csv file containing contact info '
-                    'and required fields')
-    parser.add_argument('--data_path', help='Path to folder containing PDF resumes.',
-                        required=True)
-    parser.add_argument('--output_path', help='Path to place output .csv file',
-                        default='../data/output/resumes_output.csv')
-
-    args = parser.parse_args()
-
-    # Setup logger
-    logging.basicConfig(level=logging.INFO)
-    logging.info('Begin Main')
-
-    # Create dataframe
-    df = build_dataframe(args.data_path)
-
-    # Output to CSV
-    df.to_csv(args.output_path)
-    logging.info('End Main')
 
 
 # main
 # *********************************
 
 if __name__ == '__main__':
-
     main()
-
-

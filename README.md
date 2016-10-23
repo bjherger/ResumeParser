@@ -1,7 +1,7 @@
 # Resume Parser
 
-A utility to make handling many resumes easier by automatically pulling contact information, required skills and 
-custom text fields, and surfacing these results in a tabular format. 
+A utility to make handling many resumes easier by automatically pulling contact information, required skills and
+custom text fields. These results are then surfaced as a convenient summary CSV.
 
 ## Getting started
 
