@@ -8,8 +8,10 @@ custom text fields. These results are then surfaced as a convenient summary CSV.
 ### Running Code 
 
 To run code:
+
  - Confirm that appropriate Python modules are installed (See [Python Environment](#python-environment))
- - Rune the following commands:
+ - Run the following commands:
+
  ```bash
 cd ResumeParser/bin
 python ResumeChecker.py --data_path ../data/input/example_resumes --output_path ../data/output/resumes_output.csv
