@@ -14,6 +14,9 @@ import glob
 import logging
 import os
 import re
+import sys
+reload(sys)
+sys.setdefaultencoding('utf8')
 
 import pandas as pd
 
@@ -111,7 +114,7 @@ def convert_pdf_to_txt(input_pdf_path):
 
         # Remove awkward LaTeX bullet characters
         full_string = re.sub(r"\(cid:\d{0,2}\)", " ", full_string)
-        return full_string.decode('ascii', errors='ignore')
+        return full_string.encode('ascii', errors='ignore')
 
     except Exception, exception_instance:
         logging.error('Error in file: ' + input_pdf_path + str(exception_instance))
