@@ -30,7 +30,7 @@ logging.basicConfig(level=logging.DEBUG)
 
 __author__ = 'bjherger'
 __license__ = 'http://opensource.org/licenses/MIT'
-__version__ = '2.0'
+__version__ = '2.1'
 __email__ = '13herger@gmail.com'
 __status__ = 'Development'
 __maintainer__ = 'bjherger'
@@ -56,7 +56,7 @@ def main():
         description='Script to parse PDF resumes, and create a csv file containing contact info '
                     'and required fields')
     parser.add_argument('--data_path', help='Path to folder containing documents ending in .pdf',
-                        required=True)
+                        required=False, default= '../data/input/example_resumes')
     parser.add_argument('--output_path', help='Path to place output .csv file',
                         default='../data/output/resumes_output.csv')
 
@@ -111,6 +111,12 @@ def convert_pdf_to_txt(input_pdf_path):
         # Normalize a bit, removing line breaks
         full_string = full_string.replace("\r", "\n")
         full_string = full_string.replace("\n", " ")
+        full_string = full_string.replace("View my profile", "")
+        full_string = full_string.replace("Edit my profile", "")
+
+
+        while(full_string.find("  ") > 0):
+            full_string = full_string.replace("  ", " ")
 
         # Remove awkward LaTeX bullet characters
         full_string = re.sub(r"\(cid:\d{0,2}\)", " ", full_string)
@@ -227,6 +233,130 @@ def term_match(string_to_search, term):
                       str(string_to_search) + ': ' + str(exception_instance))
         return None
 
+def check_title_city_state(string_to_search):
+    """
+        Find the title of the job, location by city and state
+        :param string_to_search: A string to check for a physical address in
+        :type string_to_search: str
+        :return: array of strings with job, location by city and state
+        :rtype: str
+        """
+    try:
+        regular_expression = re.compile(r"([A-Z][a-z][\w-]*(\s+[A-Z][\w-]*)+),\s([^,]+),\s([A-Z]{2})")
+        result = re.findall((regular_expression), string_to_search)
+
+        if len(result)>0:
+            logging.debug('Number of results: {}'.format(len(result)))
+            return result
+    except Exception, exception_instance:
+        logging.error('Issue parsing title, city, and state ' + string_to_search + str(exception_instance))
+        return None
+
+def check_education(string_to_search):
+    """
+        Find the education information in their resume
+        :param string_to_search: A string to check for education information
+        :type string_to_search: str
+        :return: string of education information
+        """
+    try:
+        #regular expression check for longer degree names
+        regular_expression_extended = re.compile(r"(\E\w+)(\s([0-9]{4}\s)([BM](\w+\s))(.+),\s([A-Z].+)\s)\R")
+
+        #regular expression check for short degree names
+        regular_expression_short = re.compile(r"(\E\w+)(\s([0-9]{4}\s)([BM](\w+\s)),\s([A-Z].+)\s)\R")
+
+        result_long = re.findall((regular_expression_extended), string_to_search)
+        result_short = re.findall((regular_expression_short), string_to_search)
+
+        if len(result_short)>0:
+            return str(result_short[0][1])
+
+        if len(result_long)>0:
+            parsed_text = str(result_long[0][1])
+            return parsed_text
+
+    except Exception, exception_instance:
+        logging.error('Issue parsing education ' + string_to_search + str(exception_instance))
+        return None
+
+
+def check_recognitions(string_to_search):
+    """
+        Find the recognition information in their resume
+        :param string_to_search: A string to check for education information
+        :type string_to_search: str
+        :return: string of recognition information
+        """
+    try:
+        # regular expression check for longer degree names
+        regular_expression = re.compile(r"RECOGNITION(.*)$")
+
+        result = re.findall((regular_expression), string_to_search)
+
+        if len(result) > 0:
+            return str(result[0])
+
+    except Exception, exception_instance:
+        logging.error('Issue parsing recognitions ' + string_to_search + str(exception_instance))
+        return None
+
+def check_recognitions(string_to_search):
+    """
+        Find the recognition information in their resume
+        :param string_to_search: A string to check for education information
+        :type string_to_search: str
+        :return: string of recognition information
+        """
+    try:
+        # regular expression check for longer degree names
+        regular_expression = re.compile(r"RECOGNITION(.*)$")
+
+        result = re.findall((regular_expression), string_to_search)
+
+        if len(result) > 0:
+            return str(result[0])
+
+    except Exception, exception_instance:
+        logging.error('Issue parsing recognitions ' + string_to_search + str(exception_instance))
+        return None
+
+def check_activities(string_to_search):
+    """
+        Find the activity information in their resume
+        :param string_to_search: A string to check for education information
+        :type string_to_search: str
+        :return: string of activity information
+        """
+    try:
+        # regular expression check for longer degree names
+        regular_expression = re.compile(r"ACTIVITY HISTORY(.*)EDUCATION")
+
+        result = re.findall((regular_expression), string_to_search)
+
+        if len(result) > 0:
+            return str(result[0])
+
+    except Exception, exception_instance:
+        logging.error('Issue parsing activity ' + string_to_search + str(exception_instance))
+        return None
+
+def check_years_worked(string_to_search):
+    """
+        Find the years worked for a given position
+        :param string_to_search: A string to check for a physical address in
+        :type string_to_search: str
+        :return: array of strings with job, location by city and state
+        :rtype: str
+        """
+    try:
+        regular_expression = re.compile(r"(\d{4}\s-\s\d{4})")
+        result = re.findall((regular_expression), string_to_search)
+        if len(result)>0:
+               return result
+    except Exception, exception_instance:
+        logging.error('Issue parsing years worked ' + string_to_search + str(exception_instance))
+        return None
 
 def create_resume_df(data_path):
     """
@@ -256,7 +386,8 @@ def create_resume_df(data_path):
     file_list = glob.glob(path_glob)
 
     logging.info('Iterating through file_list: ' + str(file_list))
-    resume_summary_df = pd.DataFrame()
+    resume_summary_df = pd.DataFrame(columns=['file_path',  'raw_text', 'num_words', 'phone_number', 'area_code',    'email',    'email_domain', 'address',  'working_jobs', 'working_years', 'education', 'recognition', 'activities', 'jobTitleLocation0',    'yearsWorked0', 'deltaYears0',  'jobTitleLocation1',    'yearsWorked1', 'deltaYears1',  'jobTitleLocation2',    'yearsWorked2', 'deltaYears2',  'jobTitleLocation3',    'yearsWorked3', 'deltaYears3',  'jobTitleLocation4',    'yearsWorked4', 'deltaYears4',  'jobTitleLocation5',    'yearsWorked5', 'deltaYears5',  'jobTitleLocation6',    'yearsWorked6', 'deltaYears6',  'jobTitleLocation7', 'yearsWorked7', 'deltaYears7', 'jobTitleLocation8', 'yearsWorked8',    'deltaYears8',  'jobTitleLocation9',  'yearsWorked9', 'deltaYears9',  'jobTitleLocation10',   'yearsWorked10',   'deltaYears10',])
+
 
     # Store metadata, raw text, and word count
     resume_summary_df["file_path"] = file_list
@@ -269,22 +400,60 @@ def create_resume_df(data_path):
     resume_summary_df["email"] = resume_summary_df["raw_text"].apply(check_email)
     resume_summary_df["email_domain"] = resume_summary_df["email"].apply(functools.partial(term_match, term=r"@(.+)"))
     resume_summary_df["address"] = resume_summary_df["raw_text"].apply(check_address)
-    resume_summary_df["linkedin"] = resume_summary_df["raw_text"].apply(functools.partial(term_count, term=r"linkedin"))
-    resume_summary_df["github"] = resume_summary_df["raw_text"].apply(functools.partial(term_count, term=r"github"))
+    # resume_summary_df["linkedin"] = resume_summary_df["raw_text"].apply(functools.partial(term_count, term=r"linkedin"))
+    # resume_summary_df["github"] = resume_summary_df["raw_text"].apply(functools.partial(term_count, term=r"github"))
 
     # Scrape education information
-    resume_summary_df["phd"] = resume_summary_df["raw_text"].apply(functools.partial(term_count, term=r"ph.?d.?"))
+    # resume_summary_df["phd"] = resume_summary_df["raw_text"].apply(functools.partial(term_count, term=r"ph.?d.?"))
 
-    # Scrape skill information
-    resume_summary_df["java_count"] = resume_summary_df["raw_text"].apply(functools.partial(term_count, term=r"java"))
-    resume_summary_df["python_count"] = resume_summary_df["raw_text"].apply(functools.partial(term_count, term=r"python"))
-    resume_summary_df["R_count"] = resume_summary_df["raw_text"].apply(functools.partial(term_count, term=r" R[ ,]"))
-    resume_summary_df["latex_count"] = resume_summary_df["raw_text"].apply(functools.partial(term_count, term=r"latex"))
-    resume_summary_df["stata_count"] = resume_summary_df["raw_text"].apply(functools.partial(term_count, term=r"stata"))
-    resume_summary_df["CS_count"] = resume_summary_df["raw_text"].apply(functools.partial(term_count, term=r"computer science"))
-    resume_summary_df["mysql_count"] = resume_summary_df["raw_text"].apply(functools.partial(term_count, term=r"mysql"))
-    resume_summary_df["ms_office"] = resume_summary_df["raw_text"].apply(functools.partial(term_count, term=r"microsoft office"))
-    resume_summary_df["analytics"] = resume_summary_df["raw_text"].apply(functools.partial(term_count, term=r"analytics"))
+    # # Scrape skill information
+    # resume_summary_df["java_count"] = resume_summary_df["raw_text"].apply(functools.partial(term_count, term=r"java"))
+    # resume_summary_df["python_count"] = resume_summary_df["raw_text"].apply(functools.partial(term_count, term=r"python"))
+    # resume_summary_df["R_count"] = resume_summary_df["raw_text"].apply(functools.partial(term_count, term=r" R[ ,]"))
+    # resume_summary_df["latex_count"] = resume_summary_df["raw_text"].apply(functools.partial(term_count, term=r"latex"))
+    # resume_summary_df["stata_count"] = resume_summary_df["raw_text"].apply(functools.partial(term_count, term=r"stata"))
+    # resume_summary_df["CS_count"] = resume_summary_df["raw_text"].apply(functools.partial(term_count, term=r"computer science"))
+    # resume_summary_df["mysql_count"] = resume_summary_df["raw_text"].apply(functools.partial(term_count, term=r"mysql"))
+    # resume_summary_df["ms_office"] = resume_summary_df["raw_text"].apply(functools.partial(term_count, term=r"microsoft office"))
+    # resume_summary_df["analytics"] = resume_summary_df["raw_text"].apply(functools.partial(term_count, term=r"analytics"))
+
+    # Scrape job history
+    # Build variables to iterate list. Since experience varies, you have to add the columns and then copy and paste afterwards
+    #for index, row in resume_summary_df.iterrows():
+    resume_summary_df["working_jobs"] = resume_summary_df["raw_text"].apply(check_title_city_state)
+    resume_summary_df["working_years"] = resume_summary_df["raw_text"].apply(check_years_worked)
+
+    resume_summary_df["education"] = resume_summary_df["raw_text"].apply(check_education)
+    resume_summary_df["recognition"] = resume_summary_df["raw_text"].apply(check_recognitions)
+    resume_summary_df["activities"] = resume_summary_df["raw_text"].apply(check_activities)
+
+    maxSize = 0
+    for index, row in resume_summary_df.iterrows():
+        jobDetails = resume_summary_df["working_jobs"][index]
+        yearDetails = resume_summary_df["working_years"][index]
+
+        counter = 0
+        if(jobDetails is not None):
+
+            try:
+                counter = 0
+                while (counter < len(jobDetails)):
+                     jobTitleLocation = "jobTitleLocation" + str(counter)
+                     yearsWorked = "yearsWorked" + str(counter)
+                     yearsDelta = "deltaYears" + str(counter)
+
+                    # index: row, counter: column
+                     print "counter: " + str(counter) + " index: " + str(index)
+                     print jobDetails[counter]
+
+                     resume_summary_df.loc[index+1, ((counter*3)+11)] = str(jobDetails[counter][0] + ", " + jobDetails[counter][2] +", "+ jobDetails[counter][3])
+                     resume_summary_df.loc[index+1, (counter*3)+12] = str(yearDetails[counter])
+                     resume_summary_df.loc[index+1, (counter*3)+13] = int(yearDetails[counter][6:])-int(yearDetails[counter][0:4])
+
+                     counter += 1
+            except: # catch *all* exceptions
+                e = sys.exc_info()[0]
+
 
     # Return enriched DF
     return resume_summary_df
