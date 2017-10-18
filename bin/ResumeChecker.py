@@ -227,7 +227,30 @@ def term_match(string_to_search, term):
                       str(string_to_search) + ': ' + str(exception_instance))
         return None
 
+def check_skills(string_to_search, term):
+    try:
 
+        words_re = re.compile(r"|".join(term),re.IGNORECASE)
+        result = re.findall(words_re,string_to_search)
+        result = list(set(result))
+        return result
+
+    except Exception as exception_instance:
+        logging.error('Issue parsing term: ' + str(term) +': ' + str(exception_instance))
+        return None
+
+def check_university(string_to_search,term):
+    try:
+        words_re = re.compile(r"|".join(term),re.IGNORECASE)
+        result = re.findall(words_re,string_to_search)
+        result = list(set(result))
+        return result
+
+    except Exception as exception_instance:
+        logging.error('Issue parsing term: ' + str(term) +': ' + str(exception_instance))
+        return None
+    
+    
 def create_resume_df(data_path):
     """
 
@@ -262,6 +285,23 @@ def create_resume_df(data_path):
     resume_summary_df["file_path"] = file_list
     resume_summary_df["raw_text"] = resume_summary_df["file_path"].apply(convert_pdf_to_txt)
     resume_summary_df["num_words"] = resume_summary_df["raw_text"].apply(lambda x: len(x.split()))
+    
+    #Most of the universities here are Australian universities, add your set of universities here...
+    universities = ['Australian Catholic University','Australian National University','Bond University','Central Queensland University',
+    'Charles Darwin University','Charles Sturt University','Curtin University','Deakin University','Edith Cowan University',
+    'Federation University','Flinders University','Griffith University','James Cook University','La Trobe University',
+    'Macquarie University','Monash University','Murdoch University','Queensland University of Technology',
+    'RMIT University','Southern Cross University','Swinburne University of Technology','Torrens University',
+    'University of Adelaide','University of Canberra','University of Divinity','University of Melbourne','University of New England',
+    'University of New South Wales','University of Newcastle','University of Notre Dame','University of Queensland',
+    'University of South Australia','University of Southern Queensland','University of Sydney','University of Tasmania','University of Technology Sydney',
+    'University of the Sunshine Coast','University of Western Australia','University of Wollongong','Victoria University',
+    'Western Sydney University','Bucknell University','University of California','University of San Francisco']
+
+    #here you can add your set of skills. I have focused more on computing skills...
+    cvskills = ['accounting','finance','statastics','taxation','pyhton','java','javascript','objective-c','swift','C,',
+    'c#','php','database','hadoop','matlab','mysql','node.js','visual studio','xcode',
+    'android studio','bootstrap','css','css3','html5','html','drupal','wordpress','react native','xamarin']
 
     # Scrape contact information
     resume_summary_df["phone_number"] = resume_summary_df["raw_text"].apply(check_phone_number)
@@ -271,9 +311,15 @@ def create_resume_df(data_path):
     resume_summary_df["address"] = resume_summary_df["raw_text"].apply(check_address)
     resume_summary_df["linkedin"] = resume_summary_df["raw_text"].apply(functools.partial(term_count, term=r"linkedin"))
     resume_summary_df["github"] = resume_summary_df["raw_text"].apply(functools.partial(term_count, term=r"github"))
+    
+    #Scrape universities information...
+    resume_summary_df["universities"] = resume_summary_df["raw_text"].apply(functools.partial(check_university,term=universities))
 
     # Scrape education information
     resume_summary_df["phd"] = resume_summary_df["raw_text"].apply(functools.partial(term_count, term=r"ph.?d.?"))
+    
+    #Scrape all skills information...
+    resume_summary_df["skills"] = resume_summary_df["raw_text"].apply(functools.partial(check_skills,term=cvskills))
 
     # Scrape skill information
     resume_summary_df["java_count"] = resume_summary_df["raw_text"].apply(functools.partial(term_count, term=r"java"))
