@@ -310,6 +310,9 @@ def create_resume_df(data_path):
     resume_summary_df["raw_text"] = resume_summary_df["file_path"].apply(convert_pdf_to_txt)
     resume_summary_df["num_words"] = resume_summary_df["raw_text"].apply(lambda x: len(x.split()))
 
+    # Extract candidate name
+    resume_summary_df["candidate_name"] = resume_summary_df["raw_text"].apply(find_persons)
+
     # Most of the universities here are Australian universities, add your set of universities here...
     universities = ['Australian Catholic University', 'Australian National University', 'Bond University',
                     'Central Queensland University',
@@ -359,7 +362,6 @@ def create_resume_df(data_path):
     # Scrape all skills information...
     resume_summary_df["skills"] = resume_summary_df["raw_text"].apply(functools.partial(check_skills, term=cvskills))
 
-    resume_summary_df["people"] = resume_summary_df["raw_text"].apply(find_persons)
     # Scrape entities
     # Return enriched DF
     return resume_summary_df
