@@ -22,10 +22,34 @@ dependencies:
 - !!python/unicode
   'zlib=1.2.8=3'
 - pip:
+  - certifi==2017.7.27.1
+  - chardet==3.0.4
+  - cymem==1.31.2
+  - cytoolz==0.8.2
+  - dill==0.2.7.1
+  - ftfy==4.4.3
   - html2text==2016.9.19
+  - html5lib==0.999999999
+  - idna==2.6
+  - murmurhash==0.26.4
   - numpy==1.11.2
   - pandas==0.19.0
+  - pathlib==1.0.1
   - pdfminer==20140328
+  - plac==0.9.6
+  - preshed==1.0.0
   - python-dateutil==2.5.3
   - pytz==2016.7
+  - regex==2017.9.23
+  - requests==2.18.4
   - six==1.10.0
+  - spacy==1.9.0
+  - termcolor==1.1.0
+  - thinc==6.5.2
+  - toolz==0.8.2
+  - tqdm==4.19.4
+  - ujson==1.35
+  - urllib3==1.22
+  - wcwidth==0.1.7
+  - webencodings==0.5.1
+  - wrapt==1.10.11

@@ -15,6 +15,9 @@ import logging
 import os
 import re
 import sys
+
+import spacy
+
 reload(sys)
 sys.setdefaultencoding('utf8')
 
@@ -119,6 +122,25 @@ def convert_pdf_to_txt(input_pdf_path):
     except Exception, exception_instance:
         logging.error('Error in file: ' + input_pdf_path + str(exception_instance))
         return ''
+
+
+def find_persons(input_string):
+
+    input_string = unicode(input_string)
+    nlp = spacy.load('en')
+    doc = nlp(input_string)
+
+    # Extract entities
+    doc_entities = doc.ents
+
+    # Subset to person type entities
+    doc_persons = filter(lambda x: x.label_ == 'PERSON', doc_entities)
+    doc_persons = filter(lambda x: len(x.text.strip().split()) >= 2, doc_persons)
+    doc_persons = map(lambda x: x.text.strip(), doc_persons)
+
+    # Assuming that the first Person entity with more than two tokens is the candidate's name
+    candidate_name = doc_persons[0]
+    return candidate_name
 
 
 def check_phone_number(string_to_search):
@@ -227,30 +249,32 @@ def term_match(string_to_search, term):
                       str(string_to_search) + ': ' + str(exception_instance))
         return None
 
+
 def check_skills(string_to_search, term):
     try:
 
-        words_re = re.compile(r"|".join(term),re.IGNORECASE)
-        result = re.findall(words_re,string_to_search)
+        words_re = re.compile(r"|".join(term), re.IGNORECASE)
+        result = re.findall(words_re, string_to_search)
         result = list(set(result))
         return result
 
     except Exception as exception_instance:
-        logging.error('Issue parsing term: ' + str(term) +': ' + str(exception_instance))
+        logging.error('Issue parsing term: ' + str(term) + ': ' + str(exception_instance))
         return None
 
-def check_university(string_to_search,term):
+
+def check_university(string_to_search, term):
     try:
-        words_re = re.compile(r"|".join(term),re.IGNORECASE)
-        result = re.findall(words_re,string_to_search)
+        words_re = re.compile(r"|".join(term), re.IGNORECASE)
+        result = re.findall(words_re, string_to_search)
         result = list(set(result))
         return result
 
     except Exception as exception_instance:
-        logging.error('Issue parsing term: ' + str(term) +': ' + str(exception_instance))
+        logging.error('Issue parsing term: ' + str(term) + ': ' + str(exception_instance))
         return None
-    
-    
+
+
 def create_resume_df(data_path):
     """
 
@@ -285,53 +309,60 @@ def create_resume_df(data_path):
     resume_summary_df["file_path"] = file_list
     resume_summary_df["raw_text"] = resume_summary_df["file_path"].apply(convert_pdf_to_txt)
     resume_summary_df["num_words"] = resume_summary_df["raw_text"].apply(lambda x: len(x.split()))
-    
-    #Most of the universities here are Australian universities, add your set of universities here...
-    universities = ['Australian Catholic University','Australian National University','Bond University','Central Queensland University',
-    'Charles Darwin University','Charles Sturt University','Curtin University','Deakin University','Edith Cowan University',
-    'Federation University','Flinders University','Griffith University','James Cook University','La Trobe University',
-    'Macquarie University','Monash University','Murdoch University','Queensland University of Technology',
-    'RMIT University','Southern Cross University','Swinburne University of Technology','Torrens University',
-    'University of Adelaide','University of Canberra','University of Divinity','University of Melbourne','University of New England',
-    'University of New South Wales','University of Newcastle','University of Notre Dame','University of Queensland',
-    'University of South Australia','University of Southern Queensland','University of Sydney','University of Tasmania','University of Technology Sydney',
-    'University of the Sunshine Coast','University of Western Australia','University of Wollongong','Victoria University',
-    'Western Sydney University','Bucknell University','University of California','University of San Francisco']
 
-    #here you can add your set of skills. I have focused more on computing skills...
-    cvskills = ['accounting','finance','statastics','taxation','pyhton','java','javascript','objective-c','swift','C,',
-    'c#','php','database','hadoop','matlab','mysql','node.js','visual studio','xcode',
-    'android studio','bootstrap','css','css3','html5','html','drupal','wordpress','react native','xamarin']
+    # Extract candidate name
+    resume_summary_df["candidate_name"] = resume_summary_df["raw_text"].apply(find_persons)
+
+    # Most of the universities here are Australian universities, add your set of universities here...
+    universities = ['Australian Catholic University', 'Australian National University', 'Bond University',
+                    'Central Queensland University',
+                    'Charles Darwin University', 'Charles Sturt University', 'Curtin University', 'Deakin University',
+                    'Edith Cowan University',
+                    'Federation University', 'Flinders University', 'Griffith University', 'James Cook University',
+                    'La Trobe University',
+                    'Macquarie University', 'Monash University', 'Murdoch University',
+                    'Queensland University of Technology',
+                    'RMIT University', 'Southern Cross University', 'Swinburne University of Technology',
+                    'Torrens University',
+                    'University of Adelaide', 'University of Canberra', 'University of Divinity',
+                    'University of Melbourne', 'University of New England',
+                    'University of New South Wales', 'University of Newcastle', 'University of Notre Dame',
+                    'University of Queensland',
+                    'University of South Australia', 'University of Southern Queensland', 'University of Sydney',
+                    'University of Tasmania', 'University of Technology Sydney',
+                    'University of the Sunshine Coast', 'University of Western Australia', 'University of Wollongong',
+                    'Victoria University',
+                    'Western Sydney University', 'Bucknell University', 'University of California',
+                    'University of San Francisco']
+
+    # Here you can add your set of skills. I have focused more on computing skills...
+    cvskills = ['accounting', 'finance', 'statastics', 'taxation', 'pyhton', 'java', 'javascript', 'objective-c',
+                'swift', 'C,',
+                'c#', 'php', 'database', 'hadoop', 'matlab', 'mysql', 'node.js', 'visual studio', 'xcode',
+                'android studio', 'bootstrap', 'css', 'css3', 'html5', 'html', 'drupal', 'wordpress', 'react native',
+                'xamarin']
 
     # Scrape contact information
     resume_summary_df["phone_number"] = resume_summary_df["raw_text"].apply(check_phone_number)
-    resume_summary_df["area_code"] = resume_summary_df["phone_number"].apply(functools.partial(term_match, term=r"\d{3}"))
+    resume_summary_df["area_code"] = resume_summary_df["phone_number"].apply(
+        functools.partial(term_match, term=r"\d{3}"))
     resume_summary_df["email"] = resume_summary_df["raw_text"].apply(check_email)
     resume_summary_df["email_domain"] = resume_summary_df["email"].apply(functools.partial(term_match, term=r"@(.+)"))
     resume_summary_df["address"] = resume_summary_df["raw_text"].apply(check_address)
     resume_summary_df["linkedin"] = resume_summary_df["raw_text"].apply(functools.partial(term_count, term=r"linkedin"))
     resume_summary_df["github"] = resume_summary_df["raw_text"].apply(functools.partial(term_count, term=r"github"))
-    
-    #Scrape universities information...
-    resume_summary_df["universities"] = resume_summary_df["raw_text"].apply(functools.partial(check_university,term=universities))
+
+    # Scrape universities information...
+    resume_summary_df["universities"] = resume_summary_df["raw_text"].apply(
+        functools.partial(check_university, term=universities))
 
     # Scrape education information
     resume_summary_df["phd"] = resume_summary_df["raw_text"].apply(functools.partial(term_count, term=r"ph.?d.?"))
-    
-    #Scrape all skills information...
-    resume_summary_df["skills"] = resume_summary_df["raw_text"].apply(functools.partial(check_skills,term=cvskills))
 
-    # Scrape skill information
-    resume_summary_df["java_count"] = resume_summary_df["raw_text"].apply(functools.partial(term_count, term=r"java"))
-    resume_summary_df["python_count"] = resume_summary_df["raw_text"].apply(functools.partial(term_count, term=r"python"))
-    resume_summary_df["R_count"] = resume_summary_df["raw_text"].apply(functools.partial(term_count, term=r" R[ ,]"))
-    resume_summary_df["latex_count"] = resume_summary_df["raw_text"].apply(functools.partial(term_count, term=r"latex"))
-    resume_summary_df["stata_count"] = resume_summary_df["raw_text"].apply(functools.partial(term_count, term=r"stata"))
-    resume_summary_df["CS_count"] = resume_summary_df["raw_text"].apply(functools.partial(term_count, term=r"computer science"))
-    resume_summary_df["mysql_count"] = resume_summary_df["raw_text"].apply(functools.partial(term_count, term=r"mysql"))
-    resume_summary_df["ms_office"] = resume_summary_df["raw_text"].apply(functools.partial(term_count, term=r"microsoft office"))
-    resume_summary_df["analytics"] = resume_summary_df["raw_text"].apply(functools.partial(term_count, term=r"analytics"))
+    # Scrape all skills information...
+    resume_summary_df["skills"] = resume_summary_df["raw_text"].apply(functools.partial(check_skills, term=cvskills))
 
+    # Scrape entities
     # Return enriched DF
     return resume_summary_df
 
