@@ -23,7 +23,7 @@ def main():
     """
     logging.getLogger().setLevel(logging.DEBUG)
 
-    # Extract data from upstream
+    # Extract data from upstream. 
     extract()
 
     # Transform data to have appropriate fields
@@ -66,6 +66,15 @@ def extract():
     return observations
 
 def transform():
+    # TODO Docstring
+
+    # TODO Extract candidate name
+
+    # TODO Extract skills
+
+    # TODO Extract contact fields
+
+    # TODO Archive schema and return
     pass
 
 def load():
