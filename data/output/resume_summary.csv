@@ -1,4 +1,4 @@
-index,file_path,extension,text,candidate_name,email,phone,skills
+index,file_path,extension,text,candidate_name,email,phone,universities,skills
 1,../data/input/example_resumes/Brendan_Herger_Resume.pdf,.pdf,"Brendan Herger
 
 Hergertarian.com | 13herger@gmail.com  |  + 1 (415) 582-7457
@@ -85,7 +85,7 @@ linkedin.com/in/bjherger
 
 hergertarian.wordpress.com/
 
-",Brendan Herger,13herger@gmail.com,"(415, 582, 7457)","{python, sklearn, java, sql}"
+",Brendan Herger,13herger@gmail.com,"(415, 582, 7457)",{university of san francisco},"{python, sklearn}"
 2,../data/input/example_resumes/john_smith.docx,.docx,"John Smith 
 
 
@@ -194,7 +194,7 @@ HONORS
 
 Summit County Alumni Association Scholarship					Spring 2014 - Present
 
-Dean’s List									Spring 2013 - Spring 2015",John Smith,sresume@kent.edu,"(614, 555, 5555)",{sql}
+Dean’s List									Spring 2013 - Spring 2015",John Smith,sresume@kent.edu,"(614, 555, 5555)",{},{}
 3,../data/input/example_resumes/Layla_Martin_Resume.pdf,.pdf,"Layla Martin
 
 2038 McAllister St
@@ -282,7 +282,7 @@ NCAA Division I Women’s Soccer: USF, 2010-2014
 • Athletic scholarship (full scholarship when combined with University Scholarship).
 • Committed 30 hours per week to training, meetings, travel, competition.
 
-",Layla Martin,layla.d.martin@gmail.com,"(520, 271, 2492)","{python, sql}"
+",Layla Martin,layla.d.martin@gmail.com,"(520, 271, 2492)",{university of san francisco},{python}
 4,../data/input/example_resumes/resume_Meyer.pdf,.pdf,"MONICA MEYER
 
 (415) · 497 · 7282 (cid:5) monica.meyer@comcast.net
@@ -346,7 +346,7 @@ Python, R
 XML, JSON, REST
 MySQL, PostgreSQL
 
-",MONICA MEYER,monica.meyer@comcast.net,,"{python, sql}"
+",MONICA MEYER,monica.meyer@comcast.net,,"{university of san francisco, university of california}",{python}
 5,../data/input/example_resumes/SGresume-1.pdf,.pdf,"Sébastien Genty
 
 1209 Page St, Apt 7, San Francisco, CA 94117
@@ -466,4 +466,4 @@ physics, research, reading, video
 games, solving problems and fixing 
 things
 
-",Sébastien Genty,sgenty@me.com,"(713, 301, 5648)","{python, tensorflow, java, sql}"
+",Sébastien Genty,sgenty@me.com,"(713, 301, 5648)",{bucknell university},"{python, tensorflow}"

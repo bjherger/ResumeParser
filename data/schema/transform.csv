@@ -5,4 +5,5 @@ text,object,observations
 candidate_name,object,observations
 email,object,observations
 phone,object,observations
+universities,object,observations
 skills,object,observations

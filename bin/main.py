@@ -41,7 +41,6 @@ def main():
     pass
 
 def extract():
-    # TODO Docstring
     logging.info('Begin extract')
 
     # Reference variables
@@ -86,6 +85,8 @@ def transform(observations, nlp):
     observations['email'] = observations['text'].apply(lambda x: lib.term_match(x, field_extraction.EMAIL_REGEX))
     observations['phone'] = observations['text'].apply(lambda x: lib.term_match(x,field_extraction.PHONE_REGEX))
 
+    # Extract university
+    observations['universities'] = observations['text'].apply(field_extraction.extract_universities)
     # Extract skills
     observations['skills'] = observations['text'].apply(field_extraction.extract_skills)
 

@@ -7,3 +7,10 @@ skills:
  - python
  - [sklearn, scikit-learn, sk-learn]
  - [tensorflow, tf, tensor-flow]
+universities:
+ - University One
+ - University Two
+ - University Three
+ - University of San Francisco
+ - Bucknell University
+ - University of California
