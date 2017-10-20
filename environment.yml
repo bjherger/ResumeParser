@@ -1,4 +1,4 @@
-name: python_environment
+name: resume
 channels:
 - !!python/unicode
   'defaults'
@@ -29,4 +29,3 @@ dependencies:
   - python-dateutil==2.5.3
   - pytz==2016.7
   - six==1.10.0
-prefix: !!python/unicode '/Users/bjherger/anaconda2/envs/python_environment'
