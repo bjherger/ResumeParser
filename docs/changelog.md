@@ -1,9 +1,22 @@
 # ResumeParser Change Log
 
-## 2.0.0 - 2016-10-22
+## 2.1.0 - 2017-10-20
 
 ### Added
 
+ - `candidate_name`: Adding candidate name extractor, using spacy
+ - `university`: Code will now check for a list of universities
+
+### Changed
+
+ - Skills search: Now users can provide a list of skills, which will be searched for
+
+### Removed
+
+
+## 2.0.0 - 2016-10-22
+
+### Added
 
 ### Changed
  - `README.md` re-written for clarity, better code example
