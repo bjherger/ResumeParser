@@ -40,6 +40,7 @@ def main():
 
     pass
 
+
 def extract():
     logging.info('Begin extract')
 
@@ -48,7 +49,6 @@ def extract():
 
     # Create list of candidate files
     for root, subdirs, files in os.walk(lib.get_conf('resume_directory')):
-
         folder_files = map(lambda x: os.path.join(root, x), files)
         candidate_file_agg.extend(folder_files)
 
@@ -74,6 +74,7 @@ def extract():
     logging.info('End extract')
     return observations, nlp
 
+
 def transform(observations, nlp):
     # TODO Docstring
 
@@ -83,7 +84,7 @@ def transform(observations, nlp):
 
     # Extract contact fields
     observations['email'] = observations['text'].apply(lambda x: lib.term_match(x, field_extraction.EMAIL_REGEX))
-    observations['phone'] = observations['text'].apply(lambda x: lib.term_match(x,field_extraction.PHONE_REGEX))
+    observations['phone'] = observations['text'].apply(lambda x: lib.term_match(x, field_extraction.PHONE_REGEX))
 
     # Extract university
     observations['universities'] = observations['text'].apply(field_extraction.extract_universities)
@@ -94,8 +95,8 @@ def transform(observations, nlp):
     lib.archive_dataset_schemas('transform', locals(), globals())
     return observations, nlp
 
-def load(observations, nlp):
 
+def load(observations, nlp):
     output_path = os.path.join(lib.get_conf('summary_output_directory'), 'resume_summary.csv')
     observations.to_csv(path_or_buf=output_path, index_label='index', encoding='utf-8')
     pass
