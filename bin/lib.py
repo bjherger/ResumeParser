@@ -34,6 +34,7 @@ def load_confs(confs_path='../confs/confs.yaml'):
 def get_conf(conf_name):
     return load_confs()[conf_name]
 
+
 def archive_dataset_schemas(step_name, local_dict, global_dict):
     """
     Archive the schema for all available Pandas DataFrames
@@ -80,6 +81,7 @@ def archive_dataset_schemas(step_name, local_dict, global_dict):
     # Write to file
     agg_schema_df.to_csv(schema_output_path, index_label='variable')
 
+
 def term_count(string_to_search, term):
     """
     A utility function which counts the number of times `term` occurs in `string_to_search`
@@ -95,6 +97,27 @@ def term_count(string_to_search, term):
         result = re.findall(regular_expression, string_to_search)
         return len(result)
     except Exception, exception_instance:
-        logging.error('Issue parsing term: ' + str(term) + ' from string: ' + str(
-            string_to_search) + ': ' + str(exception_instance))
+        logging.error('Error occurred during regex search: {}'.format(exception_instance))
         return 0
+
+
+def term_match(string_to_search, term):
+    """
+    A utility function which return the first match to the `regex_pattern` in the `string_to_search`
+    :param string_to_search: A string which may or may not contain the term.
+    :type string_to_search: str
+    :param term: The term to search for the number of occurrences for
+    :type term: str
+    :return: The first match of the `regex_pattern` in the `string_to_search`
+    :rtype: str
+    """
+    try:
+        regular_expression = re.compile(term, re.IGNORECASE)
+        result = re.findall(regular_expression, string_to_search)
+        if len(result) > 0:
+            return result[0]
+        else:
+            return None
+    except Exception, exception_instance:
+        logging.error('Error occurred during regex search: {}'.format(exception_instance))
+        return None

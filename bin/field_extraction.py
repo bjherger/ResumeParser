@@ -1,6 +1,12 @@
 import logging
 
+import re
+
 import lib
+
+
+EMAIL_REGEX = r"[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}"
+PHONE_REGEX = r"\(?(\d{3})?\)?[\s\.-]{0,2}?(\d{3})[\s\.-]{0,2}(\d{4})"
 
 
 def candidate_name_extractor(input_string, nlp):
@@ -47,7 +53,7 @@ def extract_skills(resume_text):
         for skill_alias in skill_alias_list:
 
             # Add the number of matches for each alias
-            skill_matches += lib.term_count(resume_text, skill_alias)
+            skill_matches += lib.term_count(resume_text, skill_alias.lower())
 
         # If at least one alias is found, add skill name to set of skills
         if skill_matches > 0:

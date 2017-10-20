@@ -3,4 +3,6 @@ file_path,object,observations
 extension,object,observations
 text,object,observations
 candidate_name,object,observations
+email,object,observations
+phone,object,observations
 skills,object,observations

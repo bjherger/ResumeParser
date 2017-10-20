@@ -16,6 +16,7 @@ import textract
 import lib
 import field_extraction
 
+# Set encoding to utf8, to better deal w/ utf8 encoded resumes
 reload(sys)
 sys.setdefaultencoding('utf8')
 
@@ -32,10 +33,10 @@ def main():
     observations, nlp = extract()
 
     # Transform data to have appropriate fields
-    transform(observations, nlp)
+    observations, nlp = transform(observations, nlp)
 
     # Load data for downstream consumption
-    load()
+    load(observations, nlp)
 
     pass
 
@@ -81,18 +82,21 @@ def transform(observations, nlp):
     observations['candidate_name'] = observations['text'].apply(lambda x:
                                                                 field_extraction.candidate_name_extractor(x, nlp))
 
+    # Extract contact fields
+    observations['email'] = observations['text'].apply(lambda x: lib.term_match(x, field_extraction.EMAIL_REGEX))
+    observations['phone'] = observations['text'].apply(lambda x: lib.term_match(x,field_extraction.PHONE_REGEX))
+
     # Extract skills
     observations['skills'] = observations['text'].apply(field_extraction.extract_skills)
 
-    # Extract contact fields
-
-    # TODO Archive schema and return
-
+    # Archive schema and return
     lib.archive_dataset_schemas('transform', locals(), globals())
+    return observations, nlp
 
-    return
+def load(observations, nlp):
 
-def load():
+    output_path = os.path.join(lib.get_conf('summary_output_directory'), 'resume_summary.csv')
+    observations.to_csv(path_or_buf=output_path, index_label='index', encoding='utf-8')
     pass
 
 
