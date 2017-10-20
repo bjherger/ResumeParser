@@ -5,6 +5,7 @@ import logging
 
 import os
 import pandas
+import re
 import yaml
 
 CONFS = None
@@ -78,3 +79,22 @@ def archive_dataset_schemas(step_name, local_dict, global_dict):
 
     # Write to file
     agg_schema_df.to_csv(schema_output_path, index_label='variable')
+
+def term_count(string_to_search, term):
+    """
+    A utility function which counts the number of times `term` occurs in `string_to_search`
+    :param string_to_search: A string which may or may not contain the term.
+    :type string_to_search: str
+    :param term: The term to search for the number of occurrences for
+    :type term: str
+    :return: The number of times the `term` occurs in the `string_to_search`
+    :rtype: int
+    """
+    try:
+        regular_expression = re.compile(term, re.IGNORECASE)
+        result = re.findall(regular_expression, string_to_search)
+        return len(result)
+    except Exception, exception_instance:
+        logging.error('Issue parsing term: ' + str(term) + ' from string: ' + str(
+            string_to_search) + ': ' + str(exception_instance))
+        return 0

@@ -1,2 +1,12 @@
 resume_directory: ../data/input/example_resumes
 data_schema_dir: ../data/schema
+skills:
+ - python
+ - java
+ - scala
+ - hadoop
+ - sql
+ - hive
+ - presto
+ - [sklearn, scikit-learn, sk-learn]
+ - [tensorflow, tf, tensor-flow]

@@ -6,13 +6,18 @@ Code Template
 
 """
 import logging
-
 import os
-
 import pandas
+import sys
+
+import spacy
 import textract
 
 import lib
+import field_extraction
+
+reload(sys)
+sys.setdefaultencoding('utf8')
 
 
 def main():
@@ -23,11 +28,11 @@ def main():
     """
     logging.getLogger().setLevel(logging.DEBUG)
 
-    # Extract data from upstream. 
-    extract()
+    # Extract data from upstream.
+    observations, nlp = extract()
 
     # Transform data to have appropriate fields
-    transform()
+    transform(observations, nlp)
 
     # Load data for downstream consumption
     load()
@@ -60,22 +65,32 @@ def extract():
     # Attempt to extract text from files
     observations['text'] = observations['file_path'].apply(textract.process)
 
+    # Spacy: Spacy NLP
+    asset_path = os.path.abspath('../assets/en_core_web_sm-1.2.0')
+    nlp = spacy.load('en', path=asset_path)
+
     # Archive schema and return
     lib.archive_dataset_schemas('extract', locals(), globals())
     logging.info('End extract')
-    return observations
+    return observations, nlp
 
-def transform():
+def transform(observations, nlp):
     # TODO Docstring
 
-    # TODO Extract candidate name
+    # Extract candidate name
+    observations['candidate_name'] = observations['text'].apply(lambda x:
+                                                                field_extraction.candidate_name_extractor(x, nlp))
 
-    # TODO Extract skills
+    # Extract skills
+    observations['skills'] = observations['text'].apply(field_extraction.extract_skills)
 
-    # TODO Extract contact fields
+    # Extract contact fields
 
     # TODO Archive schema and return
-    pass
+
+    lib.archive_dataset_schemas('transform', locals(), globals())
+
+    return
 
 def load():
     pass
