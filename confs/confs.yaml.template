@@ -3,7 +3,7 @@ summary_output_directory: ../data/output
 data_schema_dir: ../data/schema
 skills:
  - skill1
- - [skill2, skill2_alias_A, skill2_alias_B]
+ - [skill2_alias_A, skill2_alias_B]
  - python
  - [sklearn, scikit-learn, sk-learn]
  - [tensorflow, tf, tensor-flow]
