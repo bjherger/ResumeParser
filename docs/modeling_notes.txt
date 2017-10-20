@@ -1,2 +1,1 @@
 Modeling Notes
-ascii might be better for text decoding. utf-8 includes a bunch of random characters / bullets

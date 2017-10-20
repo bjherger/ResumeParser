@@ -1,10 +1,8 @@
-# Byte-compiled / optimized / DLL files
-__pycache__/
-*.py[cod]
-*$py.class
-
-# Mac files
+# MacOS specific files
 .DS_Store
 
-# Sensitive or high-churn Idea / Pycharm files
+# IDE specfic files
 .idea/*
+
+# Compiled python files
+*.pyc 
