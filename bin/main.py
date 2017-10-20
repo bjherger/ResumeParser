@@ -30,6 +30,18 @@ def main():
     pass
 
 def extract():
+    # TODO Docstring
+    logging.info('Begin extract')
+
+    # TODO Create list of candidate files
+
+    # TODO Subset candidate files to supported extensions
+
+    # TODO Attempt to extract text from files
+
+    # TODO Archive schema and return
+
+    logging.info('End extract')
     pass
 
 def transform():
