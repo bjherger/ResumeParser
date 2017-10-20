@@ -7,7 +7,12 @@ Code Template
 """
 import logging
 
+import os
 
+import pandas
+import textract
+
+import lib
 
 
 def main():
@@ -33,16 +38,32 @@ def extract():
     # TODO Docstring
     logging.info('Begin extract')
 
-    # TODO Create list of candidate files
+    # Reference variables
+    candidate_file_agg = list()
 
-    # TODO Subset candidate files to supported extensions
+    # Create list of candidate files
+    for root, subdirs, files in os.walk(lib.get_conf('resume_directory')):
 
-    # TODO Attempt to extract text from files
+        folder_files = map(lambda x: os.path.join(root, x), files)
+        candidate_file_agg.extend(folder_files)
 
-    # TODO Archive schema and return
+    # Convert list to a pandas DataFrame
+    observations = pandas.DataFrame(data=candidate_file_agg, columns=['file_path'])
+    logging.info('Found {} candidate files'.format(len(observations.index)))
 
+    # Subset candidate files to supported extensions
+    observations['extension'] = observations['file_path'].apply(lambda x: os.path.splitext(x)[1])
+    observations = observations[observations['extension'].isin(lib.AVAILABLE_EXTENSIONS)]
+    logging.info('Subset candidate files to extensions w/ available parsers. {} files remain'.
+                 format(len(observations.index)))
+
+    # Attempt to extract text from files
+    observations['text'] = observations['file_path'].apply(textract.process)
+
+    # Archive schema and return
+    lib.archive_dataset_schemas('extract', locals(), globals())
     logging.info('End extract')
-    pass
+    return observations
 
 def transform():
     pass
