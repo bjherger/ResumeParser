@@ -16,6 +16,8 @@ import os
 import re
 import sys
 
+import spacy
+
 reload(sys)
 sys.setdefaultencoding('utf8')
 
@@ -120,6 +122,25 @@ def convert_pdf_to_txt(input_pdf_path):
     except Exception, exception_instance:
         logging.error('Error in file: ' + input_pdf_path + str(exception_instance))
         return ''
+
+
+def find_persons(input_string):
+
+    input_string = unicode(input_string)
+    nlp = spacy.load('en')
+    doc = nlp(input_string)
+
+    # Extract entities
+    doc_entities = doc.ents
+
+    # Subset to person type entities
+    doc_persons = filter(lambda x: x.label_ == 'PERSON', doc_entities)
+    doc_persons = filter(lambda x: len(x.text.strip().split()) >= 2, doc_persons)
+    doc_persons = map(lambda x: x.text.strip(), doc_persons)
+
+    # Assuming that the first Person entity with more than two tokens is the candidate's name
+    candidate_name = doc_persons[0]
+    return candidate_name
 
 
 def check_phone_number(string_to_search):
@@ -338,6 +359,7 @@ def create_resume_df(data_path):
     # Scrape all skills information...
     resume_summary_df["skills"] = resume_summary_df["raw_text"].apply(functools.partial(check_skills, term=cvskills))
 
+    resume_summary_df["people"] = resume_summary_df["raw_text"].apply(find_persons)
     # Scrape entities
     # Return enriched DF
     return resume_summary_df
