@@ -1,0 +1,16 @@
+resume_directory: ../data/input/example_resumes
+summary_output_directory: ../data/output
+data_schema_dir: ../data/schema
+skills:
+ - skill1
+ - [skill2_alias_A, skill2_alias_B]
+ - python
+ - [sklearn, scikit-learn, sk-learn]
+ - [tensorflow, tf, tensor-flow]
+universities:
+ - University One
+ - University Two
+ - University Three
+ - University of San Francisco
+ - Bucknell University
+ - University of California

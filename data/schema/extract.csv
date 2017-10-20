@@ -1,0 +1,4 @@
+variable,type,data_set
+file_path,object,observations
+extension,object,observations
+text,object,observations

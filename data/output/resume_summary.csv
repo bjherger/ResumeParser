@@ -1,0 +1,469 @@
+index,file_path,extension,text,candidate_name,email,phone,universities,skills
+1,../data/input/example_resumes/Brendan_Herger_Resume.pdf,.pdf,"Brendan Herger
+
+Hergertarian.com | 13herger@gmail.com  |  + 1 (415) 582-7457
+
+1209 Page Street No. 7 San Francisco, Ca 94117
+
+Selected Experience
+
+Data Scientist
+
+Data Innovation Lab @ Capital One (San Francisco, Ca.)   06/15 - Now 
+Lead research team modeling for fraud problem space with class 
+imbalance & adversaries; H2O.ai, GraphLab, SKLearn
+Deployed sub-millisecond real time model; Apache Apex
+Recommended distributed machine learning frameworks for general 
+adoption at Capital One; H2O.ai, GraphLab, Apache Spark
+
+Various Technical Positions
+
+Lawfty (San Francisco, Ca.), RevUp Software (Redwood City, Ca.), 
+Perkins + Will Architecture (San Francisco, Ca.) & Lawrence Berkeley 
+National Lab. (Berkeley, Ca.)
+
+Front End Supervisor
+
+The Home Depot Pro (Colma, Ca.)                                        05/11 - 03/13
+Positions held: Cashier, Special Services Assoc., Tool Rental Assoc.
+Supervised and trained a staff of 10-30 team members
+
+Education
+MS, Analytics
+
+University of San Francisco, July 2015
+Relevant Coursework: Machine Learning, Adv. Machine Learning, Data 
+Acquisition, Exploratory Data Analysis, Relational Databases, NoSQL 
+Databases, Linear Regression Analysis, Time Series Analysis, Intro. SAS
+
+BS, Physics
+
+University of San Francisco, May 2014
+Minors: Computer Sciences, Mathematics
+Honors: University Scholar, President of ΠΜΕ Math Honors Society
+Relevant Coursework: Software Development, Data Structures & 
+Algorithms, Differential Eqn.’s, Linear Algebra, Graduate Econometrics
+
+Personal Projects
+
+Identified genre of Billboard 
+Hot 100 songs using ensemble 
+algorithm built with Support 
+Vector Machine, Neural Network, 
+Stochastic Gradient Boost, and 
+Random Forest  algorithms; 
+Python, Pandas, R and Scikit-Learn
+
+Implemented Naive Bayes text 
+classification algorithm and trained 
+this algorithm to correctly label 
+83% of movie reviews; Python, 
+numpy and Pandas
+
+Created database containing lyrics 
+of Billboard Hot 100 songs since 
+1958; R, Python, Pandas and 
+Beautiful Soup 4
+
+Built a multi-threaded web scraper 
+and search engine with web 
+user interface; Java, MySQL and 
+HTML5/CSS
+
+Built resume parsing package 
+which extracts text, finds contact 
+details, and checks for required 
+keywords; Python and Pandas
+
+Online
+
+Hergertarian.com
+
+github.com/bjherger
+
+linkedin.com/in/bjherger
+
+hergertarian.wordpress.com/
+
+",Brendan Herger,13herger@gmail.com,"(415, 582, 7457)",{university of san francisco},"{python, sklearn}"
+2,../data/input/example_resumes/john_smith.docx,.docx,"John Smith 
+
+
+
+2222 McCoy Road     Columbus, Ohio 44444    614-555-5555    sresume@kent.edu  www.linkedin.com/in/name
+
+
+
+
+
+OBJECTIVE
+
+Seeking a marketing internship with ABC Company in Spring 2017 to utilize my organizational and analytical skills.
+
+
+
+EDUCATION 
+
+Bachelor of Business Administration						Expected Graduation: May 2018
+
+Kent State University								Kent, Ohio
+
+Major: Business Management							GPA: 3.6
+
+
+
+SIGNIFICANT COURSEWORK
+
+Business Finance, Principles of Management, Legal Environment of Business
+
+
+
+COMPUTER SKILLS
+
+Microsoft Office: Word, PowerPoint, and basic Excel
+
+Applications: SQL (Structure Query Language)
+
+Programs: Adobe Photoshop, Movie Maker
+
+Social Media Administration: LinkedIn, Twitter, Instagram, Facebook
+
+	
+
+WORK EXPERIENCE 
+
+Kent State University, Kent, Ohio						August 2015 - Present 
+
+Resident Advisor
+
+Collaborate with 10 building staff and campus administrators on a weekly basis to organize a pancake breakfast fundraiser for 200 attendees, raising $500 for community charity. 
+
+Utilize effective time management skills by creating and implementing 6 programs and activities each semester for 30 residents while balancing full-time course load and extracurricular commitments. 
+
+Demonstrate strong communication skills through interacting with 150 residents and campus administrators on a weekly basis. 
+
+Facilitate problem-solving and conflict resolution amongst residents by serving as positive role model, mediator, and leader through one-on-one and small group interventions. 
+
+
+
+Panini’s Bar and Grill, Cleveland, Ohio                    				August 2014 - May 2015 
+
+Server
+
+Worked independently in a fast-paced environment while developing customer service skills with each guest to ensure their needs were consistently met.
+
+Optimized persuasive skills to highlight nightly specials and engage each table’s attention.
+
+Fostered cooperation within a staff of 7 to maintain a pleasant atmosphere.
+
+
+
+LEADERSHIP EXPERIENCE 
+
+Harding Middle School, Columbus, Ohio					July 2014 - October 2015
+
+Soccer Assistant Coach	
+
+	Executed strong communication skills by guiding and leading 20 seventh and eighth grade girls on team.
+
+	Served as positive role model by teaching young athletes about teamwork, respect, and conflict-resolution.
+
+	Planned and led weekly meetings with up to 15 parents, field managers and staff members.
+
+	Led team to its first regional championship in October 2015; recognized at school banquet with leadership award.
+
+
+
+CAMPUS INVOLVEMENT
+
+Member, Delta Sigma Pi					 		August 2016 - Present 
+
+Member, Collegiate Business Association					August 2015 - Present 
+
+
+
+VOLUNTEER EXPERIENCE 
+
+Relay for Life, Kent State University				 		March 2015
+
+Donation Processer, Greater Cleveland Food Bank				December 2014 - February 2015
+
+
+
+HONORS
+
+Summit County Alumni Association Scholarship					Spring 2014 - Present
+
+Dean’s List									Spring 2013 - Spring 2015",John Smith,sresume@kent.edu,"(614, 555, 5555)",{},{}
+3,../data/input/example_resumes/Layla_Martin_Resume.pdf,.pdf,"Layla Martin
+
+2038 McAllister St
+
+San Francisco, CA 94118
+
+layla.d.martin@gmail.com (520) 271-2492
+
+EDUCATION
+AND AWARDS
+
+Master of Science in Analytics
+University of San Francisco, San Francisco, CA
+
+Bachelor of Science in Mathematics, Cum Laude
+University of San Francisco
+Dean’s Honor Role (4 years)
+University Scholar, USF’s highest academic scholarship (4 years)
+
+Expected June 2015
+
+May 2014
+
+SELECTED
+PROJECTS
+
+Sentiment Analysis using Naive-Bayes
+
+Graduate
+• Classiﬁed movie reviews as positive or negative with 75% accuracy by implementing a
+
+Naive-Bayes algorithm in Python.
+
+NBA Play-By-Play Data Cleaning
+
+Summer research with USF Faculty
+• Cleaned play-by-play data for every NBA game from 2006 to 2012 using Pandas (Python).
+
+Analysis of USF Men’s Basketball Statistics using R
+
+Undergraduate
+• Predicted importance of players on the court using simple and multiple linear regression
+
+and created visualizations of player statistics using R.
+
+Explaining Artiﬁcial Neural Networks (ANN)
+
+Undergraduate
+• Prepared two student lectures teaching classmates basic implementation and theory behind
+• Preprocessed ﬁngerprint images as matrices in Matlab and performed pattern classiﬁcation
+
+supervised learning, backpropagation, and pattern recognition with ANN.
+
+using an ANN program.
+
+Mathematical Modeling Research
+
+Undergraduate
+
+• Performed image compression with SVD implemented in Matlab.
+• Ranked West Coast Conference Men’s Basketball teams using multiple centrality ranking
+
+algorithms in Matlab.
+
+LEADERSHIP
+
+President, Pi Mu Epsilon National Math Honor Society
+Captain, USF Women’s Soccer
+Teacher’s Assistant, USF Astronomy Observations
+
+2014
+2013-2014
+2013-2014
+
+SKILLS
+
+Python, R, MySQL, PostgreSQL, Matlab, LaTeX, JMP
+
+INTER-
+COLLEGIATE
+ATHLETICS
+
+NCAA Division I Women’s Soccer: USF, 2010-2014
+
+• Athletic scholarship (full scholarship when combined with University Scholarship).
+• Committed 30 hours per week to training, meetings, travel, competition.
+
+",Layla Martin,layla.d.martin@gmail.com,"(520, 271, 2492)",{university of san francisco},{python}
+4,../data/input/example_resumes/resume_Meyer.pdf,.pdf,"MONICA MEYER
+
+(415) · 497 · 7282 (cid:5) monica.meyer@comcast.net
+
+EDUCATION
+
+Master of Science in Analytics
+University of San Francisco
+
+Bachelor of Arts in Mathematics
+University of California, Santa Cruz
+Overall GPA: 3.5
+
+COURSE PROJECTS
+
+Expected June 2015
+
+July 2012
+
+Business Location Recommendation
+Sep 2014
+· Queried Yelp and Zillow APIs and performed exploratory data analysis necessary for project to help
+businesses decide where to open their next establishment.
+
+Text Classiﬁcation
+· Classiﬁed movie reviews as positive or negative using Naive Bayes in Python.
+· Found most important words in Reuter’s articles through term frequency, inverse document frequency
+on XML ﬁles in Python.
+
+July 2014
+
+WORK EXPERIENCE
+
+Bank of America
+Dec 2013 - June 2014
+Sales and Service Specialist
+Mill Valley, CA
+· Promoted due to proven ability to resolve complex service issues and process transactions accurately
+and eﬃciently to guarantee customer satisfaction and build customer conﬁdence and trust. Responsible
+for establishing, retaining and deepening relationships with customers to achieve team sales goals as
+well as providing proactive sales activities of basic products while referring more complex requests such
+as mortgages and investment products.
+
+Bank of America
+Aug 2012 - Dec 2013
+Teller
+Mill Valley, CA
+· Gained proﬁciency in retail banking operations, including computing ﬁgures, processing transactions
+with speed and accuracy and building customer loyalty through exceptional customer service. Learned
+to control large amounts of cash ﬂow, work within established policies, procedures and guidelines and
+acquired the ability to advise customers on products and services the bank has to oﬀer. Earned a
+promotion to the position of Sales and Service Specialist.
+
+SKILLS
+
+Programming
+Protocols & APIs
+Databases
+
+Python, R
+XML, JSON, REST
+MySQL, PostgreSQL
+
+",MONICA MEYER,monica.meyer@comcast.net,,"{university of san francisco, university of california}",{python}
+5,../data/input/example_resumes/SGresume-1.pdf,.pdf,"Sébastien Genty
+
+1209 Page St, Apt 7, San Francisco, CA 94117
+
+713-301-5648 • sgenty@me.com
+Work Experience
+Project Director, Socratic Technologies 
+
+•  Collaborate with clients to plan, construct, and execute surveys for collecting 
+
+insightful data on their business and marketing needs
+
+•  Explore data using advanced mathematical and statistical methods, in order to 
+
+identify insights and trends
+
+•  Visualize data and extract insights for client facing deliverables
+•  Create market simulators using highly customized applications that incorporate post 
+
+survey analytical results to predict comparative sales figures and market share
+
+•  Manage the data collection process by allocating resources, overseeing workflow, and 
+
+verifying quality data collection
+
+•  Formulated and built a new survey tool that increased statistical variance in 
+
+respondent data, currently in use for multiple clients
+
+•  Established a new model to test the reach, appeal and effectiveness of advertisements
+
+Research Assistant, Bucknell University
+
+•  Independently designed and built an optical set-up to take pictures of Bose-Einstein 
+
+•  Created a user interface to control a high-end camera using Visual Basic
+•  Coordinated with other research assistants working on different aspects of the same 
+
+condensates
+
+experiment
+
+•  Computer model and data analysis done using Matlab and ImageJ
+
+Research Intern, MD Anderson Cancer Center
+
+•  Researched CT dosiometry using a relatively new technique involving x-ray sensitive 
+
+film
+
+•  Analyzed data using Matlab and Mathematica
+
+September 2012 - Present
+
+Fall 2011 - Spring 2012
+
+Summer 2011
+
+Relevant Projects
+New Product Development
+
+•  Computed ideal product configuration by creating a market 
+
+simulator using conjoint analysis
+
+Purchase Process Identification
+
+•  Identified patterns in the purchase process of mortgages using a 
+
+client provided database and formed insights about the timing and 
+effectiveness of marketing materials
+
+Customer Feedback
+
+•  Analyzed users’ opinions and knowledge of recently released 
+
+version of leading media player and distribution platform
+
+Bay Area Bike Share Open Data Challenge
+
+•  Uncovered habits and behavior of riders using an open source 
+dataset and currently developing a visualization of bike station 
+usage
+
+Education
+Bucknell University – Lewisburg, PA
+
+B.S. Physics
+Minor: International Relations
+International Leadership Scholarship
+
+Graduated May 2012
+
+Languages
+  English
+  French
+  Spanish
+  German
+
+Skills
+Computer
+  R
+  Python
+  SPSS
+  Mathematica
+  Matlab
+  Javascript
+  C++
+  SQL
+  Unix
+  Adobe Creative Suite
+  Microsoft Office
+
+Interests
+Film and digital photography, 
+physics, research, reading, video 
+games, solving problems and fixing 
+things
+
+",Sébastien Genty,sgenty@me.com,"(713, 301, 5648)",{bucknell university},"{python, tensorflow}"

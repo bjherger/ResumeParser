@@ -1,0 +1,11 @@
+{
+    "name": "core_web_sm",
+    "lang": "en",
+    "version": "1.2.0",
+    "spacy_version": ">=1.7.0,<2.0.0",
+    "description": "Small English model for spaCy. Includes vocabulary, syntax, entities and word vectors (GloVe).",
+    "author": "Explosion AI",
+    "email": "contact@explosion.ai",
+    "url": "https://explosion.ai",
+    "license": "CC BY-SA 3.0"
+}
