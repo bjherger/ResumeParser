@@ -77,6 +77,7 @@ def extract():
 
 def transform(observations, nlp):
     # TODO Docstring
+    logging.info('Begin transform')
 
     # Extract candidate name
     observations['candidate_name'] = observations['text'].apply(lambda x:
@@ -93,12 +94,19 @@ def transform(observations, nlp):
 
     # Archive schema and return
     lib.archive_dataset_schemas('transform', locals(), globals())
+    logging.info('End transform')
     return observations, nlp
 
 
 def load(observations, nlp):
+    logging.info('Begin load')
     output_path = os.path.join(lib.get_conf('summary_output_directory'), 'resume_summary.csv')
+
+    logging.info('Results being output to {}'.format(output_path))
+    print('Results output to {}'.format(output_path))
+    
     observations.to_csv(path_or_buf=output_path, index_label='index', encoding='utf-8')
+    logging.info('End transform')
     pass
 
 
