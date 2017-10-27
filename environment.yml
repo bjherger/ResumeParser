@@ -4,8 +4,6 @@ channels:
   'defaults'
 dependencies:
 - !!python/unicode
-  'openssl=1.0.2h=2'
-- !!python/unicode
   'pip=8.1.2=py27_0'
 - !!python/unicode
   'python=2.7.12=1'
