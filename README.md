@@ -4,7 +4,7 @@ A utility to make handling many resumes easier by automatically pulling contact 
 
 ## Quick Start Guide
 
-This assumes you've installed Anaconda (as discussed in [Python Environment](#python-environment)
+This assumes you've installed Anaconda (as discussed in [Python Environment](#python-environment))
 
 ```bash
 # Create Python virtual enviornment
