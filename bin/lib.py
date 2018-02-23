@@ -15,7 +15,7 @@ AVAILABLE_EXTENSIONS = {'.csv', '.doc', '.docx', '.eml', '.epub', '.gif', '.htm'
                         '.tif', '.tiff', '.tsv', '.txt', '.wav', '.xls', '.xlsx'}
 
 
-def load_confs(confs_path='../confs/confs.yaml'):
+def load_confs(confs_path='../confs/config.yaml'):
     # TODO Docstring
     global CONFS
 
