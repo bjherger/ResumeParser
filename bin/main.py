@@ -12,8 +12,8 @@ import textract
 
 import lib
 import field_extraction
+import spacy
 
-import en_core_web_sm
 
 def main():
     """
@@ -27,7 +27,7 @@ def main():
     observations = extract()
 
     # Spacy: Spacy NLP
-    nlp = en_core_web_sm.load()
+    nlp = spacy.load('en')
 
     # Transform data to have appropriate fields
     observations, nlp = transform(observations, nlp)
@@ -42,7 +42,7 @@ def text_extract_utf8(f):
     try:
         return unicode(textract.process(f), "utf-8")
     except UnicodeDecodeError, e:
-        return e
+        return ''
 
 def extract():
     logging.info('Begin extract')
