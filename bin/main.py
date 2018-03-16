@@ -8,17 +8,11 @@ Code Template
 import logging
 import os
 import pandas
-import sys
-
-import spacy
 import textract
 
 import lib
 import field_extraction
-
-# Set encoding to utf8, to better deal w/ utf8 encoded resumes
-reload(sys)
-sys.setdefaultencoding('utf8')
+import spacy
 
 
 def main():
@@ -27,10 +21,13 @@ def main():
     :return: None
     :rtype: None
     """
-    logging.getLogger().setLevel(logging.DEBUG)
+    logging.getLogger().setLevel(logging.INFO)
 
     # Extract data from upstream.
-    observations, nlp = extract()
+    observations = extract()
+
+    # Spacy: Spacy NLP
+    nlp = spacy.load('en')
 
     # Transform data to have appropriate fields
     observations, nlp = transform(observations, nlp)
@@ -40,6 +37,12 @@ def main():
 
     pass
 
+
+def text_extract_utf8(f):
+    try:
+        return unicode(textract.process(f), "utf-8")
+    except UnicodeDecodeError, e:
+        return ''
 
 def extract():
     logging.info('Begin extract')
@@ -63,16 +66,12 @@ def extract():
                  format(len(observations.index)))
 
     # Attempt to extract text from files
-    observations['text'] = observations['file_path'].apply(textract.process)
-
-    # Spacy: Spacy NLP
-    asset_path = os.path.abspath('../assets/en_core_web_sm-1.2.0')
-    nlp = spacy.load('en', path=asset_path)
+    observations['text'] = observations['file_path'].apply(text_extract_utf8)
 
     # Archive schema and return
     lib.archive_dataset_schemas('extract', locals(), globals())
     logging.info('End extract')
-    return observations, nlp
+    return observations
 
 
 def transform(observations, nlp):
@@ -87,10 +86,8 @@ def transform(observations, nlp):
     observations['email'] = observations['text'].apply(lambda x: lib.term_match(x, field_extraction.EMAIL_REGEX))
     observations['phone'] = observations['text'].apply(lambda x: lib.term_match(x, field_extraction.PHONE_REGEX))
 
-    # Extract university
-    observations['universities'] = observations['text'].apply(field_extraction.extract_universities)
     # Extract skills
-    observations['skills'] = observations['text'].apply(field_extraction.extract_skills)
+    observations = field_extraction.extract_fields(observations)
 
     # Archive schema and return
     lib.archive_dataset_schemas('transform', locals(), globals())
@@ -104,8 +101,8 @@ def load(observations, nlp):
 
     logging.info('Results being output to {}'.format(output_path))
     print('Results output to {}'.format(output_path))
-    
-    observations.to_csv(path_or_buf=output_path, index_label='index', encoding='utf-8')
+
+    observations.to_csv(path_or_buf=output_path, index_label='index', encoding='utf-8', sep=";")
     logging.info('End transform')
     pass
 

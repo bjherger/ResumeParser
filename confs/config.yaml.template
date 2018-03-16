@@ -1,0 +1,66 @@
+resume_directory: ../data/input/example_resumes
+summary_output_directory: ../data/output
+data_schema_dir: ../data/schema
+
+extractors:
+ experience:
+  - [Teacher, teaching, tutor]
+  - [developer, software developer, software engineer, dev]
+  - trader
+
+ platforms:
+  - Linux
+  - Windows
+  - [Mac, MacOS]
+
+ database:
+  - SQL
+  - MySQL
+  - [Postgress, Postgresql]
+  - Oracle
+
+ programming:
+  - [java, JavaEE]
+  - C
+  - C++
+  - C#
+  - .NET
+  - Matlab
+  - R
+  - python
+  - VHDL
+
+
+ machinelearning:
+  - [sklearn, scikit-learn, sk-learn]
+  - [tensorflow, tf, tensor-flow]
+  - keras
+  - h20
+
+
+ universities:
+  - [TU Delft, TUDelft, Delft University of Technology]
+  - [Univerity of Twente, UTwente]
+  - [University of Amsterdam, UvA]
+  - [Vrije Univesriteit, VU University, VU Amsterdam, VU]
+  - MIT
+
+ languages:
+  - Dutch
+  - English
+  - German
+  - Spanisch
+  - [Chinese, Mandorin]
+
+ hobbies:
+  - [swimming, swim]
+  - [soccer, football]
+  - painting
+  - reading
+
+ open-source:
+  - github
+  - bitbucket
+  - gitlab
+  - sourceforge
+  - gitkraken

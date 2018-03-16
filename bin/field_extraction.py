@@ -22,16 +22,23 @@ def candidate_name_extractor(input_string, nlp):
     doc_persons = map(lambda x: x.text.strip(), doc_persons)
 
     # Assuming that the first Person entity with more than two tokens is the candidate's name
-    candidate_name = doc_persons[0]
-    return candidate_name
+    if doc_persons:
+        return doc_persons[0]
+    return "NOT FOUND"
 
 
-def extract_skills(resume_text):
+def extract_fields(df):
+    for extractor, items_of_interest in lib.get_conf('extractors').items():
+        df[extractor] = df['text'].apply(lambda x: extract_skills(x, extractor, items_of_interest))
+    return df
+
+
+def extract_skills(resume_text, extractor, items_of_interest):
     potential_skills_dict = dict()
     matched_skills = set()
 
     # TODO This skill input formatting could happen once per run, instead of once per observation.
-    for skill_input in lib.get_conf('skills'):
+    for skill_input in items_of_interest:
 
         # Format list inputs
         if type(skill_input) is list and len(skill_input) >= 1:
@@ -57,21 +64,3 @@ def extract_skills(resume_text):
             matched_skills.add(skill_name)
 
     return matched_skills
-
-
-def extract_universities(resume_text):
-
-    # Reference variables
-    matched_universities = set()
-    normalized_resume_text = ' '.join(simple_preprocess(resume_text))
-
-    # Iterate through possible universities
-    for university in lib.get_conf('universities'):
-
-        university = ' '.join(simple_preprocess(university))
-        university_count = lib.term_count(normalized_resume_text, university)
-
-        if university_count > 0:
-            matched_universities.add(university)
-
-    return matched_universities
