@@ -29,6 +29,8 @@ extractors:
   - R
   - python
   - VHDL
+  - PHP
+  - JavaScript
 
 
  machinelearning:
