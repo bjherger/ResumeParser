@@ -7,12 +7,12 @@ Code Template
 """
 import logging
 import os
-import pandas
-import textract
 
-import lib
-import field_extraction
+import pandas
 import spacy
+
+from bin import field_extraction
+from bin import lib
 
 
 def main():
@@ -37,13 +37,6 @@ def main():
 
     pass
 
-
-def text_extract_utf8(f):
-    try:
-        return unicode(textract.process(f), "utf-8")
-    except UnicodeDecodeError, e:
-        return ''
-
 def extract():
     logging.info('Begin extract')
 
@@ -66,7 +59,7 @@ def extract():
                  format(len(observations.index)))
 
     # Attempt to extract text from files
-    observations['text'] = observations['file_path'].apply(text_extract_utf8)
+    observations['text'] = observations['file_path'].apply(lib.convert_pdf)
 
     # Archive schema and return
     lib.archive_dataset_schemas('extract', locals(), globals())
@@ -102,7 +95,7 @@ def load(observations, nlp):
     logging.info('Results being output to {}'.format(output_path))
     print('Results output to {}'.format(output_path))
 
-    observations.to_csv(path_or_buf=output_path, index_label='index', encoding='utf-8', sep=";")
+    observations.to_csv(path_or_buf=output_path, index_label='index')
     logging.info('End transform')
     pass
 

@@ -2,14 +2,13 @@ import logging
 
 from gensim.utils import simple_preprocess
 
-import lib
+from bin import lib
 
 EMAIL_REGEX = r"[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}"
 PHONE_REGEX = r"\(?(\d{3})?\)?[\s\.-]{0,2}?(\d{3})[\s\.-]{0,2}(\d{4})"
 
 
 def candidate_name_extractor(input_string, nlp):
-    input_string = unicode(input_string)
 
     doc = nlp(input_string)
 
@@ -20,9 +19,10 @@ def candidate_name_extractor(input_string, nlp):
     doc_persons = filter(lambda x: x.label_ == 'PERSON', doc_entities)
     doc_persons = filter(lambda x: len(x.text.strip().split()) >= 2, doc_persons)
     doc_persons = map(lambda x: x.text.strip(), doc_persons)
+    doc_persons = list(doc_persons)
 
     # Assuming that the first Person entity with more than two tokens is the candidate's name
-    if doc_persons:
+    if len(doc_persons) > 0:
         return doc_persons[0]
     return "NOT FOUND"
 
