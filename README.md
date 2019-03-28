@@ -13,7 +13,7 @@ conda env create -f environment.yml
 # Activate Python virtual environment
 source activate resume
 
-#Retrieve language model from spacy
+# Retrieve language model from spacy
 python -m spacy download en
 
 # Run code (with default configurations)
