@@ -1,0 +1,87 @@
+Brendan Herger
+
+Hergertarian.com | 13herger@gmail.com  |  + 1 (415) 582-7457
+
+1209 Page Street No. 7 San Francisco, Ca 94117
+
+Selected Experience
+
+Data Scientist
+
+Data Innovation Lab @ Capital One (San Francisco, Ca.)   06/15 - Now 
+Lead research team modeling for fraud problem space with class 
+imbalance & adversaries; H2O.ai, GraphLab, SKLearn
+Deployed sub-millisecond real time model; Apache Apex
+Recommended distributed machine learning frameworks for general 
+adoption at Capital One; H2O.ai, GraphLab, Apache Spark
+
+Various Technical Positions
+
+Lawfty (San Francisco, Ca.), RevUp Software (Redwood City, Ca.), 
+Perkins + Will Architecture (San Francisco, Ca.) & Lawrence Berkeley 
+National Lab. (Berkeley, Ca.)
+
+Front End Supervisor
+
+The Home Depot Pro (Colma, Ca.)                                        05/11 - 03/13
+Positions held: Cashier, Special Services Assoc., Tool Rental Assoc.
+Supervised and trained a staff of 10-30 team members
+
+Education
+MS, Analytics
+
+University of San Francisco, July 2015
+Relevant Coursework: Machine Learning, Adv. Machine Learning, Data 
+Acquisition, Exploratory Data Analysis, Relational Databases, NoSQL 
+Databases, Linear Regression Analysis, Time Series Analysis, Intro. SAS
+
+BS, Physics
+
+University of San Francisco, May 2014
+Minors: Computer Sciences, Mathematics
+Honors: University Scholar, President of ΠΜΕ Math Honors Society
+Relevant Coursework: Software Development, Data Structures & 
+Algorithms, Differential Eqn.’s, Linear Algebra, Graduate Econometrics
+
+Personal Projects
+
+Identified genre of Billboard 
+Hot 100 songs using ensemble 
+algorithm built with Support 
+Vector Machine, Neural Network, 
+Stochastic Gradient Boost, and 
+Random Forest  algorithms; 
+Python, Pandas, R and Scikit-Learn
+
+Implemented Naive Bayes text 
+classification algorithm and trained 
+this algorithm to correctly label 
+83% of movie reviews; Python, 
+numpy and Pandas
+
+Created database containing lyrics 
+of Billboard Hot 100 songs since 
+1958; R, Python, Pandas and 
+Beautiful Soup 4
+
+Built a multi-threaded web scraper 
+and search engine with web 
+user interface; Java, MySQL and 
+HTML5/CSS
+
+Built resume parsing package 
+which extracts text, finds contact 
+details, and checks for required 
+keywords; Python and Pandas
+
+Online
+
+Hergertarian.com
+
+github.com/bjherger
+
+linkedin.com/in/bjherger
+
+hergertarian.wordpress.com/
+
+
