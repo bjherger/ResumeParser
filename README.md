@@ -7,11 +7,8 @@ A utility to make handling many resumes easier by automatically pulling contact 
 This assumes you've installed Anaconda (as discussed in [Python Environment](#python-environment))
 
 ```bash
-# Create Python virtual enviornment
-conda env create -f environment.yml
-
-# Activate Python virtual environment
-source activate resume
+# Install requirements
+pip install -r requirements.txt
 
 # Retrieve language model from spacy
 python -m spacy download en
