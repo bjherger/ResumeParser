@@ -9,6 +9,8 @@ import subprocess
 import pandas
 import yaml
 
+from bin import pdf2text
+
 CONFS = None
 
 AVAILABLE_EXTENSIONS = {'.csv', '.doc', '.docx', '.eml', '.epub', '.gif', '.htm', '.html', '.jpeg', '.jpg', '.json',
@@ -124,14 +126,18 @@ def term_match(string_to_search, term):
         return None
 
 def convert_pdf(f):
-    args = ['pdf2txt.py', f]
-    pipe = subprocess.Popen(
-        args,
-        stdout=subprocess.PIPE, stderr=subprocess.PIPE,
-    )
 
-    stdout, stderr = pipe.communicate()
-    return stdout.decode("utf-8")
+    # Create intermediate output file
+    # TODO Is this a desirable feature? Could this be replaced with a tempfile or fake file?
+    output_filename = os.path.basename(os.path.splitext(f)[0]) + '.txt'
+    output_filepath = os.path.join('..', 'data', 'output', output_filename)
+    logging.info('Writing text from {} to {}'.format(f, output_filepath))
+
+    # Convert pdf to text, placed in intermediate output file
+    pdf2text.main(args=[f, '--outfile', output_filepath])
+
+    # Return contents of intermediate output file
+    return open(output_filepath).read()
 
 
 

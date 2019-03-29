@@ -1,0 +1,64 @@
+MONICA MEYER
+
+(415) · 497 · 7282 (cid:5) monica.meyer@comcast.net
+
+EDUCATION
+
+Master of Science in Analytics
+University of San Francisco
+
+Bachelor of Arts in Mathematics
+University of California, Santa Cruz
+Overall GPA: 3.5
+
+COURSE PROJECTS
+
+Expected June 2015
+
+July 2012
+
+Business Location Recommendation
+Sep 2014
+· Queried Yelp and Zillow APIs and performed exploratory data analysis necessary for project to help
+businesses decide where to open their next establishment.
+
+Text Classiﬁcation
+· Classiﬁed movie reviews as positive or negative using Naive Bayes in Python.
+· Found most important words in Reuter’s articles through term frequency, inverse document frequency
+on XML ﬁles in Python.
+
+July 2014
+
+WORK EXPERIENCE
+
+Bank of America
+Dec 2013 - June 2014
+Sales and Service Specialist
+Mill Valley, CA
+· Promoted due to proven ability to resolve complex service issues and process transactions accurately
+and eﬃciently to guarantee customer satisfaction and build customer conﬁdence and trust. Responsible
+for establishing, retaining and deepening relationships with customers to achieve team sales goals as
+well as providing proactive sales activities of basic products while referring more complex requests such
+as mortgages and investment products.
+
+Bank of America
+Aug 2012 - Dec 2013
+Teller
+Mill Valley, CA
+· Gained proﬁciency in retail banking operations, including computing ﬁgures, processing transactions
+with speed and accuracy and building customer loyalty through exceptional customer service. Learned
+to control large amounts of cash ﬂow, work within established policies, procedures and guidelines and
+acquired the ability to advise customers on products and services the bank has to oﬀer. Earned a
+promotion to the position of Sales and Service Specialist.
+
+SKILLS
+
+Programming
+Protocols & APIs
+Databases
+
+Python, R
+XML, JSON, REST
+MySQL, PostgreSQL
+
+
