@@ -118,7 +118,7 @@ physics, research, reading, video
 games, solving problems and fixing 
 things
 
-",Sébastien Genty,sgenty@me.com,"('713', '301', '5648')",{'developer'},set(),{'SQL'},"{'R', 'JavaScript', 'java', 'Matlab', 'C', 'python'}",{'tensorflow'},set(),"{'German', 'Spanish', 'English'}",{'reading'},set()
+",Sébastien Genty,sgenty@me.com,"('713', '301', '5648')",{'developer'},set(),{'SQL'},"{'C', 'R', 'python', 'Matlab', 'java', 'JavaScript'}",{'tensorflow'},set(),"{'Spanish', 'English', 'German'}",{'reading'},set()
 2,../data/input/example_resumes/john_smith.pdf,.pdf,"John Smith  
 
  
@@ -308,7 +308,7 @@ August 2015 - Present
 
  
 
-",John Smith,sresume@kent.edu,"('614', '555', '5555')","{'Teacher', 'developer'}",set(),{'SQL'},"{'R', 'C'}",set(),{'MIT'},set(),{'soccer'},set()
+",John Smith,sresume@kent.edu,"('614', '555', '5555')","{'developer', 'Teacher'}",set(),{'SQL'},"{'R', 'C'}",set(),{'MIT'},set(),{'soccer'},set()
 3,../data/input/example_resumes/resume_Meyer.pdf,.pdf,"MONICA MEYER
 
 (415) · 497 · 7282 (cid:5) monica.meyer@comcast.net
@@ -372,7 +372,7 @@ Python, R
 XML, JSON, REST
 MySQL, PostgreSQL
 
-",MONICA MEYER,monica.meyer@comcast.net,,set(),set(),"{'SQL', 'MySQL', 'Postgress'}","{'python', 'R', 'C', '.NET'}",set(),set(),set(),set(),set()
+",MONICA MEYER,monica.meyer@comcast.net,,set(),set(),"{'SQL', 'Postgress', 'MySQL'}","{'R', 'C', 'python', '.NET'}",set(),set(),set(),set(),set()
 4,../data/input/example_resumes/Layla_Martin_Resume.pdf,.pdf,"Layla Martin
 
 2038 McAllister St
@@ -460,7 +460,7 @@ NCAA Division I Women’s Soccer: USF, 2010-2014
 • Athletic scholarship (full scholarship when combined with University Scholarship).
 • Committed 30 hours per week to training, meetings, travel, competition.
 
-",Layla Martin,layla.d.martin@gmail.com,"('520', '271', '2492')",{'Teacher'},set(),"{'SQL', 'MySQL', 'Postgress'}","{'R', '.NET', 'Matlab', 'C', 'python'}",set(),{'MIT'},set(),{'soccer'},set()
+",Layla Martin,layla.d.martin@gmail.com,"('520', '271', '2492')",{'Teacher'},set(),"{'SQL', 'Postgress', 'MySQL'}","{'C', 'R', 'python', '.NET', 'Matlab'}",set(),{'MIT'},set(),{'soccer'},set()
 5,../data/input/example_resumes/Brendan_Herger_Resume.pdf,.pdf,"Brendan Herger
 
 Hergertarian.com | 13herger@gmail.com  |  + 1 (415) 582-7457
@@ -547,4 +547,4 @@ linkedin.com/in/bjherger
 
 hergertarian.wordpress.com/
 
-",Brendan Herger,13herger@gmail.com,"('415', '582', '7457')",{'developer'},{'Mac'},"{'SQL', 'MySQL'}","{'R', '.NET', 'java', 'C', 'python'}",{'sklearn'},{'Vrije Univesriteit'},set(),set(),{'github'}
+",Brendan Herger,13herger@gmail.com,"('415', '582', '7457')",{'developer'},{'Mac'},"{'SQL', 'MySQL'}","{'C', 'R', 'python', '.NET', 'java'}",{'sklearn'},{'Vrije Univesriteit'},set(),set(),{'github'}

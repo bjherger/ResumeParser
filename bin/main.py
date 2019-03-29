@@ -5,11 +5,17 @@ coding=utf-8
 Code Template
 
 """
+import inspect
 import logging
 import os
+import sys
 
 import pandas
 import spacy
+
+currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+parentdir = os.path.dirname(currentdir)
+sys.path.insert(0,parentdir)
 
 from bin import field_extraction
 from bin import lib
