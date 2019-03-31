@@ -33,9 +33,9 @@ open ../data/output/resume_summary.csv
 
 ### Python Environment
 
-Python code in this repo utilizes packages that are not part of the common library. To make sure you have all of the appropriate packages, please install [Anaconda, Python 2.7 Version](https://www.continuum.io/downloads), and install the environment described in `environment.yml` (Instructions [here](http://conda.pydata.org/docs/using/envs.html), under *Creating an environment from an environment.yml file*, and *Activating an environment*).
-
-Once Anaconda is installed, you can follow the steps described in the [Quick Start Guide](quick-start-guide)
+Python code in this repo utilizes packages that are not part of the common library. To make sure you have all of the 
+appropriate packages, please use `pip` to install the `requirements.txt` file. For more details, please see the [pip 
+documentation](https://pip.pypa.io/en/stable/user_guide/#requirements-files)
 
 ### Configuration file
 
