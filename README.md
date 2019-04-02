@@ -60,4 +60,4 @@ The configuration file has a few parameters you can tweak:
  - `universities`: A YAML list of universities you'd like to search for
 
 ## Contact
-Feel free to contact me at `13herger <at> gmail <dot> com`
+Feel free to contact me at `13herger <at> gmail <dot> com`. If you're interested in projects like this, check out my [website](http://hergertarian.com) and [blog](http://hergertarian.com/blog)
