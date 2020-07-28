@@ -80,6 +80,11 @@ def transform(observations, nlp):
     # Extract candidate name
     observations['candidate_name'] = observations['text'].apply(lambda x:
                                                                 field_extraction.candidate_name_extractor(x, nlp))
+    
+    if observations['candidate_name'] = "NOT FOUND":
+        match = re.search(field_extraction.NAME_REGEX, observations['text'], re.IGNORECASE)
+        observations['candidate_name'] = match[0]
+        
 
     # Extract contact fields
     observations['email'] = observations['text'].apply(lambda x: lib.term_match(x, field_extraction.EMAIL_REGEX))
