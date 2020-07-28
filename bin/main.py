@@ -81,7 +81,7 @@ def transform(observations, nlp):
     observations['candidate_name'] = observations['text'].apply(lambda x:
                                                                 field_extraction.candidate_name_extractor(x, nlp))
     
-    if observations['candidate_name'] = "NOT FOUND":
+    if observations['candidate_name'] == "NOT FOUND":
         match = re.search(field_extraction.NAME_REGEX, observations['text'], re.IGNORECASE)
         observations['candidate_name'] = match[0]
         
